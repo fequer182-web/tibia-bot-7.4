@@ -1,0 +1,5 @@
+#pragma once
+#include "core/profile/Capabilities.hpp"
+#include "core/profile/ProfileValidator.hpp"
+#include <sstream>
+namespace crome { inline std::string diagnosticsText(const BuildProfile& p){ auto c=Capabilities::from(p); auto v=ProfileValidator::validate(p); std::ostringstream o; o<<"Profile: "<<p.build.profileName<<" ["<<p.build.profileStatus<<"]\n"<<"Arch: "<<p.build.architecture<<" ptr="<<p.build.pointerSize<<"\n"<<"Hash: "<<p.build.textHash<<"\n\nReaders\n Player: "<<(c.playerRead?"READY":"MISSING")<<"\n Creatures: "<<(c.creatureRead?"READY":"PARTIAL")<<"\n Inventory: "<<(c.inventoryRead?"READY":"MISSING")<<"\n Containers: "<<(c.containerRead?"READY":"MISSING")<<"\n Map: "<<(c.mapRead?"READY":"MISSING")<<"\n\nActions\n Walk: "<<(c.walk?"READY":"MISSING")<<"\n Attack: "<<(c.attack?"READY":"MISSING")<<"\n Follow: "<<(c.follow?"READY":"MISSING")<<"\n Say: "<<(c.say?"READY":"MISSING")<<"\n Use: "<<(c.use?"READY":"MISSING")<<"\n UseWith: "<<(c.useWith?"READY":"MISSING")<<"\n\nFeatures\n Look ID: "<<(c.lookCapture?"READY":"MISSING")<<"\n HackLight: "<<(c.hackLight?"READY":"MISSING")<<"\n"; return o.str(); } }

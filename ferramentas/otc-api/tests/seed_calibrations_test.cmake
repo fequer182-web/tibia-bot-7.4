@@ -1,0 +1,16 @@
+set(root "${CMAKE_CURRENT_BINARY_DIR}/seed-calibrations-test")
+file(MAKE_DIRECTORY "${root}/source" "${root}/destination")
+file(WRITE "${root}/source/pe-existing.json" "old-approved")
+file(WRITE "${root}/destination/pe-existing.json" "new-calibration")
+file(WRITE "${root}/source/pe-new.json" "approved")
+file(WRITE "${root}/source/unrelated.json" "not-a-profile")
+set(SOURCE_DIR "${root}/source")
+set(DEST_DIR "${root}/destination")
+include("${SEED_SCRIPT}")
+file(READ "${DEST_DIR}/pe-existing.json" existing)
+file(READ "${DEST_DIR}/pe-new.json" added)
+if(NOT existing STREQUAL "new-calibration" OR NOT added STREQUAL "approved"
+   OR EXISTS "${DEST_DIR}/unrelated.json")
+    message(FATAL_ERROR "Profile seeding overwrote calibration or copied wrong files")
+endif()
+

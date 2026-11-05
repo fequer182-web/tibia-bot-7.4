@@ -1,0 +1,53 @@
+from pathlib import Path
+import json,re,csv,sys,socket,hashlib,zipfile
+sys.path.insert(0,str(Path('work/internal_bot').resolve()));from lab_database import query
+w=Path('work/internal_bot/learning_navigation');r=Path(r'C:\Users\Usuario\Documents\Codex\Crome_Bateria_5');out=Path('outputs/navegacao_aprendizagem_v1');out.mkdir(exist_ok=True)
+lines=[l for l in (r/'data/crome_batch_events.log').read_text().splitlines()if '|aprendizagem_navegacao_ep'in l]
+events=[]
+for line in lines:
+ p=line.split('|');events.append({'case':p[1],'player':p[2],'event':p[3],'values':dict(re.findall(r'(\w+)=([^ ]+)',p[4])),'raw':line})
+rows=[]
+for episode in(1,2):
+ case='aprendizagem_navegacao_ep'+str(episode)
+ for i in range(1,6):
+  player='Crome Teste '+str(i);scope=[e for e in events if e['case']==case and e['player']==player]
+  def item(kind):return next(e['values']for e in scope if e['event']==kind)
+  loaded=item('LEARNING_LOADED');done=item('LEARNING_SUMMARY');final=item('FINAL')
+  steps=[e for e in scope if e['event']=='NAV_STEP_COMPLETED'];updates=[e for e in scope if e['event']=='POLICY_UPDATED']
+  assert int(done['confirmed'])==len(steps) and int(done['updates'])-int(loaded['updates'])==len(updates)
+  assert int(done['uncertain'])==0 and int(final['hp'])==150
+  row={'episode':episode,'player':player,'confirmedSteps':len(steps),'novelConfirmedSteps':sum(e['values']['novel']=='true'for e in steps),'uncertainSteps':int(done['uncertain']),'tilesLoaded':int(loaded['tiles']),'updatesLoaded':int(loaded['updates']),'updatesAdded':len(updates),'updatesTotal':int(done['updates']),'goalsReached':sum(e['values']['status']=='COMPLETED'for e in updates),'optionsUncertain':sum(e['values']['status']=='UNCERTAIN'for e in updates),'uniqueTilesLifetime':int(done['uniqueLifetime']),'hp':150}
+  if episode==2:
+   previous=next(x for x in rows if x['episode']==1 and x['player']==player)
+   assert row['updatesLoaded']==previous['updatesTotal'] and row['tilesLoaded']>0
+  rows.append(row)
+assert not any(e['event']in('ERROR','MEMORY_SAVE_ERROR','START_FAILED')for e in events)
+meta=json.loads(Path('work/internal_bot/batch_control.json').read_text());assert meta['database'].startswith('crome_bot_lab_')
+assert query('SELECT COUNT(*) FROM players_online',meta['database']).strip()=='0'
+for port in meta['ports']:
+ with socket.socket()as s:s.bind(('127.0.0.1',port))
+source=Path(r'C:\Users\Usuario\Documents\Codex\Crome_OT_Laboratorio');primarydb=json.loads((source/'laboratorio.json').read_text())['banco'];primary=query("SELECT experience,health,posx,posy,posz FROM players WHERE name='Crome Interno'",primarydb).strip();assert primary=='45\t68\t32097\t32206\t7'
+domain=json.loads((w/'domain.json').read_text());memory=Path(domain['memory'])
+for i in range(1,6):
+ q=(memory/('Crome_Teste_'+str(i)+'_policy.tsv')).read_text();count=int(q.splitlines()[1].split('\t')[1]);assert count==next(x['updatesTotal']for x in rows if x['episode']==2 and x['player']=='Crome Teste '+str(i))
+ assert q.splitlines()[0]=='CROME_POLICY_1\t'+domain['domain']
+totals={'confirmedSteps':sum(x['confirmedSteps']for x in rows),'novelConfirmedSteps':sum(x['novelConfirmedSteps']for x in rows),'policyUpdates':sum(x['updatesAdded']for x in rows),'goalsReached':sum(x['goalsReached']for x in rows),'uncertainOptions':sum(x['optionsUncertain']for x in rows)}
+summary={'date':'2026-10-29','players':5,'episodes':2,'secondsEach':55,'mode':'exploration on floor7 near temple','totals':totals,'perPlayerEpisode':rows,'domain':domain,'originalCromeInternoUnchanged':primary,'onlineAtEnd':0,'portsFreeAtEnd':True,'scope':'Initial tabular semi-Markov Q-learning; not evidence of consistent improvement after two episodes. Safety return, combat decisions and floor transitions not exercised in this run.'}
+(out/'evidencias.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
+with(out/'metricas.csv').open('w',newline='',encoding='utf-8-sig')as f:
+ writer=csv.DictWriter(f,list(rows[0]));writer.writeheader();writer.writerows(rows)
+(out/'eventos.log').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+text=['# Navegacao e aprendizagem interna — primeira integracao','','O modo learning_navigation escolhe metas de exploracao a partir das fronteiras observadas. A busca de caminho e tecnica; a politica tabular escolhe o alvo concreto e recebe o resultado observado. A bancada anterior continua disponivel separadamente.','','## Implementado','','- A* sobre tiles observados e referencia estatica do mapa. Cada passo ainda precisa ser aceito e executado pelo motor normal.','- Bloqueio por criatura e campo tem validade temporaria; nao vira parede permanente. Observacoes recentes prevalecem sobre a referencia do mapa.','- Transacao de movimento: um passo pendente por personagem, confirmacao por posicao, timeout de 3 segundos e tratamento separado de deslocamento inesperado. Enviar nao gera premio.','- Memoria persistente de tiles, visitas e valores Q, separada por personagem e dominio do mapa/catalogo. Arquivos TSV sao lidos como dados, sem executar codigo da memoria. Escrita com arquivo temporario e copia anterior.','- Metas concretas EXPLORE:x,y,z e WAIT limitado. Novidade so vale na primeira visita fisicamente confirmada daquele personagem, inclusive entre reinicios. Completar meta repetida sem novidade nao recebe bonus positivo.','- Q-learning tabular com opcoes temporais: alpha=0.2, gamma=0.95 a cada unidade de 5 segundos e epsilon=0.08. O bootstrap considera somente os candidatos permitidos no proximo estado.','- Recompensa: +0.2 por novo tile confirmado, +0.3 ao atingir meta com novidade; dano -0.08 por HP perdido, tempo -0.01/s, opcao incerta -0.1 e rejeitada -0.2. Cura nao recebe premio positivo. Repetir um tile nao rende descoberta.','- HP abaixo de 60% aciona retorno forcado ao ponto inicial fora da escolha aprendida. Campos e tiles recusados nao se tornam aceitaveis pelo custo de esperar. Esse retorno do novo modo nao foi exercitado ao vivo neste ensaio.','','## Ensaio real','','Cinco personagens da bancada, duas sessoes de 55 segundos, mesmo andar 7 na regiao do templo. Metas limitadas a um raio local de laboratorio; busca usa a referencia do mapa e observacao atual. O teste preparou HP e condicoes antes de cada sessao e usou os equipamentos existentes da bancada. Nao mede recuperacao autonoma, combate ou progressao natural.','','| Personagem | Passos 1 / 2 | Novos tiles confirmados 1 / 2 | Q carregado na sessao 2 | Atualizacoes acumuladas |','|---|---:|---:|---:|---:|']
+for i in range(1,6):
+ a=next(x for x in rows if x['episode']==1 and x['player']=='Crome Teste '+str(i));b=next(x for x in rows if x['episode']==2 and x['player']==a['player'])
+ text.append(f"| {a['player']} | {a['confirmedSteps']} / {b['confirmedSteps']} | {a['novelConfirmedSteps']} / {b['novelConfirmedSteps']} | {b['updatesLoaded']} atualizacoes | {b['updatesTotal']} |")
+text+=['',f"Foram {totals['confirmedSteps']} passos confirmados, {totals['novelConfirmedSteps']} primeiras visitas confirmadas e {totals['policyUpdates']} atualizacoes da politica. Todos terminaram com 150/150 HP. Nao houve timeout de passo, deslocamento inesperado, falha de save ou personagem deixado online.",'',f"Das opcoes, {totals['goalsReached']} atingiram a meta e {totals['uncertainOptions']} foram encerradas sem confirmar a chegada, por limite temporal ou fim da sessao. Esses dois resultados nao sao tratados como equivalentes. O numero de tiles carregados inclui paredes e tiles apenas vistos; nao deve ser confundido com passos ou tiles visitados.",'','A segunda sessao carregou os contadores e os valores Q persistidos. Os testes Lua conferiram a igualdade dos valores apos salvar/carregar, a mudanca de preferencia apos resultados distintos e a exclusao de valores de acoes nao permitidas no bootstrap. No servidor, escolhas e atualizacoes foram registradas por personagem.','','## Limites e proxima validacao','','Duas sessoes nao demonstram melhora consistente causada pelo Q-learning. A memoria do mapa e a contagem de visitas tambem alteram as escolhas; seria necessario comparar com uma politica sem atualizacoes, com condicoes equivalentes e varias sementes. Ainda ha opcoes que nao chegam ao alvo dentro do prazo; faltam melhores criterios de encerramento e escolha de metas longas.','','Este modo ainda nao aprende a usar escadas, corda, alavancas, chaves, quests, compras ou combate. A navegacao e testada em um andar e a tabela Q usa contexto compacto de regiao, HP e equipamento. Risco de monstros, economia e outras mudancas de servidor exigem contexto adicional. A seguranca de retorno do modo novo e a degradacao sob bloqueio prolongado precisam de testes especificos.','','Os testes de modulo cobriram desvio de parede, andares separados, expiracao de criatura temporaria, exclusao de segunda acao pendente, premio somente apos confirmacao, timeout, deslocamento inesperado, persistencia, dominio diferente, ausencia de premio por revisita e bootstrap mascarado.','','O Crome Interno anterior continua com 45 XP e 68 HP, em 32097,32206,7. As cinco sessoes terminaram e as portas ficaram livres.','','## Arquivos e repeticao','','Modulos instalados em C:\\Users\\Usuario\\Documents\\Codex\\Crome_Bateria_5\\data\\crome_learning. O iniciador TESTAR_NAVEGACAO.cmd executa mais duas sessoes e continua a memoria; nao a apaga. Como a bancada prepara HP/condicoes a cada sessao, isso deve continuar identificado como experimento. O mapa/catalogo sao conferidos antes de reutilizar o dominio da politica.','','O pacote e uma atualizacao para o laboratorio existente, nao um servidor completo. Contem modulos, controlador, parametros, testes, metricas e a memoria resultante. Nao contem banco, senhas ou chave RSA.']
+(out/'RELATORIO.md').write_text('\n'.join(text)+'\n',encoding='utf-8');(r/'RELATORIO_NAVEGACAO.md').write_bytes((out/'RELATORIO.md').read_bytes())
+with zipfile.ZipFile('outputs/crome_navegacao_aprendizagem_v1.zip','w',zipfile.ZIP_DEFLATED)as z:
+ for f in out.iterdir():z.write(f,'relatorio/'+f.name)
+ for name in ['navigation.lua','policy.lua','controller.lua','test_modules.py','run_live.py','live_cases.json','domain.json']:z.write(w/name,'learning_navigation/'+name)
+ z.write(Path('work/internal_bot/batch_driver.lua'),'data/scripts/zz_crome_lab_smoke.lua');z.write(r/'data/crome_batch_prior.lua','data/crome_batch_prior.lua')
+ for f in memory.glob('*.tsv'):z.write(f,'memoria/'+f.name)
+ for ep in(1,2):z.write(r/('aprendizagem_navegacao_ep'+str(ep)+'_navegacao_aprendizagem_v1_console.log'),'evidencias/episodio_'+str(ep)+'.log')
+ z.write(r/'TESTAR_NAVEGACAO.cmd','TESTAR_NAVEGACAO.cmd')
+print('VALIDATED',totals)

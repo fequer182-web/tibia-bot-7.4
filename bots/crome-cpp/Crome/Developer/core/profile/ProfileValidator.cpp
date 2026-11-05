@@ -1,0 +1,5 @@
+#include "core/profile/ProfileValidator.hpp"
+namespace crome { ValidationReport ProfileValidator::validate(const BuildProfile& p){ ValidationReport r; if(p.schema!="otclab-build-profile-v2")r.errors.push_back("schema inesperado: "+p.schema); if(p.schemaVersion!=2)r.errors.push_back("schemaVersion deve ser 2"); if(p.build.architecture.empty())r.errors.push_back("architecture ausente"); if(!p.localPlayer.directGlobalRva)r.warnings.push_back("LocalPlayer directGlobalRva ausente"); if(p.build.profileStatus!="complete")r.warnings.push_back("profile parcial: capabilities serao reduzidas");
+if(p.features.look.status==FieldStatus::Confirmed && (!p.features.look.hookRva || !p.features.look.itemIdOffset)) r.errors.push_back("features.look confirmado sem hookRva/itemIdOffset");
+if(p.features.hackLight.status==FieldStatus::Confirmed && (!p.features.hackLight.intensityOffset || p.features.hackLight.type.empty())) r.errors.push_back("features.hackLight confirmado sem intensityOffset/type");
+r.usable=r.errors.empty(); return r; } }

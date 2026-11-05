@@ -1,0 +1,192 @@
+{
+  "active_profile": "auto",
+  "profiles": [
+    {
+      "id": "olders_x64_2026_09_25",
+      "name": "Olders x64 - 25/09/2026",
+      "enabled": true,
+      "executables": [
+        "Olders_OpenGL.exe",
+        "olders_opengl.exe",
+        "Olders_DX9.exe",
+        "olders_dx9.exe"
+      ],
+      "x64": true,
+      "module_size": "0x17BF000",
+      "types": {
+        "local_player_stats": "double",
+        "local_player_states": "uint8",
+        "creature_hp_percent": "uint8",
+        "creature_direction": "uint8"
+      },
+      "offsets": {
+        "creature": {
+          "x": "0x18",
+          "y": "0x1C",
+          "z": "0x20",
+          "id": "0x38",
+          "name": "0x40",
+          "hp_percent": "0x60",
+          "direction": "0x64",
+          "alive_removed": "0x1A6",
+          "skull": "0xFC",
+          "party": "0xFD"
+        },
+        "local_player": {
+          "states": "0x648",
+          "health": "0x658",
+          "max_health": "0x660",
+          "capacity": "0x668",
+          "experience": "0x678",
+          "level": "0x680",
+          "mana": "0x690",
+          "max_mana": "0x698",
+          "magic_level": "0x6A0"
+        },
+        "container": {
+          "map_from_game": "0x20",
+          "map_header": "0x00",
+          "node_left": "0x00",
+          "node_parent": "0x08",
+          "node_right": "0x10",
+          "node_is_nil": "0x19",
+          "node_container": "0x28",
+          "container_id": "0x18",
+          "deque_map": "0x60",
+          "deque_map_size": "0x68",
+          "deque_offset": "0x70",
+          "item_count": "0x78",
+          "item_id": "0x38",
+          "item_subtype": "0x3C"
+        },
+        "map": {
+          "tile_things_begin": "0x48",
+          "tile_things_end": "0x50",
+          "tile_things_capacity": "0x58"
+        },
+        "inventory": {
+          "base": "0x550",
+          "slot_stride": "0x8",
+          "slot_count": 10
+        }
+      },
+      "runtime": {
+        "local_player_ptr_rva": "0x169A680",
+        "local_player_vtable_rva": "0x11DA490",
+        "local_player_slot_offset": "0xA8",
+        "local_player_slot_target_rva": "0x181C40",
+        "game_autowalk_rva": "0x162200",
+        "game_object_rva": "0x169A680",
+        "map_object_rva": "0x169A860",
+        "map_empty_slot_rva": "0x169A850",
+        "map_get_tile_rva": "0x22D9A0",
+        "monster_vtable_rva": "0x11E6460"
+      },
+      "actions": {
+        "attack": "0x165410",
+        "follow": "0x1656E0",
+        "walk": "0x1805C0",
+        "look": "0x163B10",
+        "use": "0x164570",
+        "use_with": "0x164A50",
+        "move": "0x163E20",
+        "open": null,
+        "close": null,
+        "cast_spell": "0x165D40",
+        "say_default": "0x165D40"
+      }
+    },
+    {
+      "id": "example_new_build",
+      "name": "Example - copy this block for another build",
+      "enabled": false,
+      "executables": [
+        "Olders_OpenGL.exe"
+      ],
+      "x64": true,
+      "module_size": null,
+      "types": {
+        "local_player_stats": "double",
+        "local_player_states": "uint8",
+        "creature_hp_percent": "uint8",
+        "creature_direction": "uint8"
+      },
+      "offsets": {
+        "creature": {
+          "x": "0x18",
+          "y": "0x1C",
+          "z": "0x20",
+          "id": "0x38",
+          "name": "0x40",
+          "hp_percent": "0x60",
+          "direction": "0x64",
+          "alive_removed": null,
+          "skull": null,
+          "party": null
+        },
+        "local_player": {
+          "states": "0x648",
+          "health": "0x658",
+          "max_health": "0x660",
+          "capacity": "0x668",
+          "experience": "0x678",
+          "level": "0x680",
+          "mana": "0x690",
+          "max_mana": "0x698",
+          "magic_level": "0x6A0"
+        },
+        "container": {
+          "map_from_game": "0x20",
+          "map_header": "0x00",
+          "node_left": "0x00",
+          "node_parent": "0x08",
+          "node_right": "0x10",
+          "node_is_nil": "0x19",
+          "node_container": "0x28",
+          "container_id": "0x18",
+          "deque_map": "0x60",
+          "deque_map_size": "0x68",
+          "deque_offset": "0x70",
+          "item_count": "0x78",
+          "item_id": "0x38",
+          "item_subtype": "0x3C"
+        },
+        "map": {
+          "tile_things_begin": "0x48",
+          "tile_things_end": "0x50",
+          "tile_things_capacity": "0x58"
+        },
+        "inventory": {
+          "base": null,
+          "slot_stride": "0x8",
+          "slot_count": 10
+        }
+      },
+      "runtime": {
+        "local_player_ptr_rva": null,
+        "local_player_vtable_rva": null,
+        "local_player_slot_offset": null,
+        "local_player_slot_target_rva": null,
+        "game_autowalk_rva": null,
+        "game_object_rva": null,
+        "map_object_rva": null,
+        "map_empty_slot_rva": null,
+        "map_get_tile_rva": null,
+        "monster_vtable_rva": null
+      },
+      "actions": {
+        "attack": null,
+        "follow": null,
+        "walk": null,
+        "look": null,
+        "use": null,
+        "use_with": null,
+        "move": null,
+        "open": null,
+        "close": null,
+        "cast_spell": null,
+        "say_default": null
+      }
+    }
+  ]
+}

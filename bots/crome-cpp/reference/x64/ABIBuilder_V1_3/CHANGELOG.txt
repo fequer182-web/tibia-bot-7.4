@@ -1,0 +1,11 @@
+OTCLab ABI Builder V1.3 X64 - AUTOCALIBRATOR / CALLER EVIDENCE
+
+- Mantém Evidence Fusion e snapshots da V1.2.
+- Resolve automaticamente CALL site natural a partir do return address capturado no callee.
+- Reconhece CALL rel32 e CALL indireto x64 comum.
+- Usa .pdata / exception directory para resolver início/fim da função caller.
+- Grava returnRva, naturalCallSiteRva, callerFunctionRva, call kind, call-site window e caller prologue no JSON.
+- Compara estímulo A/B e valida caller somente quando o mesmo CALL site é observado nos dois.
+- callerCandidateReady exige ABI + thread natural + caller site validado.
+- callable permanece FALSE. Nenhuma chamada interna ativa foi adicionada.
+- abiCatalog atualizado para schema v4.

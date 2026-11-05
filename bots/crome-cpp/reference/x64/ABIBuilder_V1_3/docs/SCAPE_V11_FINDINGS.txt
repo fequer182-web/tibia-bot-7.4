@@ -1,0 +1,20 @@
+SCAPE - RESULTADO QUE MOTIVOU A V1.2
+
+Fingerprint do profile:
+Timestamp 0x6A82C258
+SizeImage 0xFDB000
+Profile hash 0x15F49CEEE51C6AD
+Runtime hash observado no ABI Builder V1.1: 0xCA03F789B5EBD89D
+
+V1.1 observou:
+- Game::attack: RVA disparou, duas criaturas validas depois de retry; TID natural consistente.
+- Game::follow: RVA disparou, duas criaturas validas depois de retry; TID natural consistente.
+- Look: duas amostras, mas o learner promoveu STACK+0x50 embora o BuildExplorer ja tivesse evidência melhor de ThingPtr via RDX.
+- Move: RVA disparou nas duas amostras, count em R9; source/Position ficaram parciais.
+- Use: a acao escolhida nao passou pela RVA.
+- UseWith: a RVA disparou, mas source/target ficaram sem mapping.
+- LocalPlayer::autoWalk: clique-to-walk disparou 1x em cada amostra.
+- Game::autoWalk: clique-to-walk disparou 2x/1x.
+
+Hipotese corrigida na V1.2:
+shared_ptr/reference temporarios precisam ser copiados NO INSTANTE do breakpoint. Depois que a chamada retorna, a memoria do wrapper/Position temporario pode ja ter sido reutilizada.

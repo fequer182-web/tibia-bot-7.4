@@ -1,0 +1,3 @@
+#include "modules/support/SupportEngine.hpp"
+#include <chrono>
+namespace crome { void SupportEngine::tick(const GameState& s,CromeApi& api,ActionScheduler& q,CooldownManager& cd){if(!cfg_.enabled||!s.player.valid)return; constexpr uint64_t MANA_SHIELD=0x10, PARALYZE=0x20, HASTE=0x40; auto cast=[&](const char* key,const std::string& spell,int pr){if(spell.empty()||!cd.ready(key,std::chrono::milliseconds(900)))return; q.submit({pr,"support",[&api,&cd,key,spell]{api.actions().say(spell);cd.mark(key);}});}; if(cfg_.manaShield && !(s.player.states&MANA_SHIELD))cast("manaShield",cfg_.manaShieldSpell,80); if(cfg_.antiParalyze && (s.player.states&PARALYZE))cast("antiPara",cfg_.antiParaSpell,85); if(cfg_.haste && !(s.player.states&HASTE))cast("haste",cfg_.hasteSpell,60); } }

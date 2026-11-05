@@ -1,0 +1,23 @@
+TESTE V1.3 - AUTO CALLER EVIDENCE
+
+1. Copie o JSON atualizado da V1.2 para profiles\.
+2. Rode build.bat.
+3. Injete a DLL V1.3.
+4. Aceite Attack, Follow, Look, Move, Use, UseWith e LocalPlayer::autoWalk.
+5. Para Game::autoWalk, pode responder S também.
+6. Faça somente as ações reais pedidas pelo console.
+
+Resultado esperado no summary:
+  caller site -> 0x........ (call_rel32/call_indirect) function=0x........ samples=N validated=YES
+
+No JSON devem aparecer:
+  naturalCallerObserved
+  callerSiteValidated
+  naturalCallSiteRva
+  naturalReturnRva
+  naturalCallerFunctionRva
+  naturalCallerFunctionEndRva
+  callSiteWindow
+  callerProloguePrefix
+
+IMPORTANTE: callable deve continuar false.

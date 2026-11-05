@@ -1,0 +1,14 @@
+OTCLab BuildExplorer V2.7.1 - TESTE SCAPE
+
+1. Compile com build.bat.
+2. Injete apenas OTCLab_BuildExplorer_V2_7_1_X64_PLAYER_REBIND.dll.
+3. O profile Scape conhecido esta em Build automaticamente se ainda nao existir.
+4. Na etapa ITEM / PLAYER / CLASSIFICATION:
+   - se existir outro Player humano visivel, responda S;
+   - ative Follow no Player e pressione ENTER;
+   - depois desative Follow quando solicitado, mantendo o Player visivel.
+5. Resultado esperado quando o FollowTarget for wrapper diferente do world Thing*:
+   [PLAYER FOLLOW REBIND][PASS]
+6. Se nao fechar apos 3 rodadas, NAO fica preso:
+   volta para R/S/Q.
+   Escolha S para continuar com Player pending e liberar as etapas seguintes.

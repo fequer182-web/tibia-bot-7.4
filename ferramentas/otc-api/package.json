@@ -1,0 +1,9 @@
+{
+  "name": "otc-api-tools",
+  "private": true,
+  "scripts": {
+    "calibration:embed:win32": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/embed-calibration.ps1 -Architecture Win32",
+    "calibration:embed:x64": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/embed-calibration.ps1 -Architecture x64"
+  }
+}
+

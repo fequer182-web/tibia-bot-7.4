@@ -1,0 +1,1361 @@
+{
+  "schema": "otclab-build-profile-v2",
+  "schemaVersion": 2,
+  "storagePolicy": {
+    "sourceOfTruth": "this_file",
+    "oneOfficialProfilePerBuild": true,
+    "legacyAliasesGenerated": false
+  },
+  "capabilities": {
+    "readOnlyCoreReady": true,
+    "strictConsumerReady": true,
+    "nativeActionsReady": false,
+    "lookCaptureReady": true,
+    "hackLightReady": false
+  },
+  "profileName": "auto_6AA9FA57_89D3D35243890EA2",
+  "profileStatus": "complete",
+  "migratorState": {
+    "name": "auto_6AA9FA57_89D3D35243890EA2",
+    "status": "player_discovered_runtime",
+    "timestamp": "0x6AA9FA57",
+    "sizeOfImage": "0x17BF000",
+    "textHashFNV1A64": "0x89D3D35243890EA2",
+    "vtableRva": "0x11DA490",
+    "directGlobalRva": "0x169A680",
+    "indirectGlobalRva": "0x169A698",
+    "ownerOffset": "0x198",
+    "x": "0x18",
+    "y": "0x1C",
+    "z": "0x20",
+    "id": "0x38",
+    "hpPercent": "0x60",
+    "direction": "0x64",
+    "creatureName": "0x40",
+    "creatureWalkDirection": "0x68",
+    "creatureSpeed": "0xEC",
+    "creatureSkull": "0xFC",
+    "creatureParty": "0xFD",
+    "creatureRemoved": "0x1A6",
+    "creatureWalking": "0x330",
+    "creatureStates": "0x648",
+    "health": "0x658",
+    "maxHealth": "0x660",
+    "capacity": "0x668",
+    "experience": "0x678",
+    "level": "0x680",
+    "mana": "0x690",
+    "maxMana": "0x698",
+    "gameRva": "0x169A680",
+    "gameLocalPlayer": "0x0",
+    "gameAttackTarget": "0x8",
+    "gameFollowTarget": "0x10",
+    "gameStatus": "discovered_runtime_new_build",
+    "followStatus": "discovered_runtime_selfcheck_pass",
+    "mapRva": "0x169A860",
+    "mapCenterX": "0x340",
+    "mapCenterY": "0x344",
+    "mapCenterZ": "0x348",
+    "mapNorth": "0x368",
+    "mapEast": "0x36C",
+    "mapSouth": "0x370",
+    "mapWest": "0x374",
+    "mapStatus": "discovered_runtime_selfcheck_pass",
+    "tileThingsBegin": "0x48",
+    "tileThingsEnd": "0x50",
+    "tileThingsCap": "0x58",
+    "tileVtableRva": "0x11E6D48",
+    "tileRttiName": ".?AVTile@@",
+    "thingStorageStride": "0x8",
+    "thingStorageMode": "raw_pointer_array",
+    "tileThingsStatus": "discovered_runtime_selfcheck_pass",
+    "mapTilePathDepth": "0x2",
+    "mapTilePathMapOffset": "0x2C0",
+    "mapTilePathChildOffset": "0x0",
+    "mapTilePathHeaderOffset": "0x1B0",
+    "mapTileStorageStride": "0x8",
+    "mapTileStorageMode": "raw_pointer_array",
+    "mapTilePathStatus": "confirmed_runtime_two_positions",
+    "monsterVtableRva": "0x11E6460",
+    "monsterVtableStatus": "confirmed_runtime_two_attack_samples",
+    "itemVtableRva": "0x11DA0D8",
+    "itemVtableStatus": "confirmed_semantic_rtti_item",
+    "playerVtableRva": "0x11DA328",
+    "playerVtableStatus": "confirmed_runtime_followtarget_world_member",
+    "slotIsItem": "0x28",
+    "slotIsCreature": "0x40",
+    "slotIsMonster": "0x50",
+    "slotIsPlayer": "0x58",
+    "slotIsLocalPlayer": "0x60",
+    "classificationStatus": "confirmed_runtime_four_class_static_bool",
+    "npcVtableRva": "0x11E65C8",
+    "slotIsNpc": "0x0",
+    "npcStatus": "confirmed_semantic_rtti_npc",
+    "inventoryBaseOffset": "0x540",
+    "inventorySlotStride": "0x8",
+    "inventoryStorageMode": "raw_pointer_array",
+    "inventoryStatus": "confirmed_runtime_logical_slot",
+    "itemIdOffset": "0x38",
+    "itemCountOffset": "0x3C",
+    "itemCountWidth": "0x2",
+    "itemLayoutStatus": "confirmed_runtime_container_items_item_vtable",
+    "gameContainersOffset": "0x20",
+    "containerMapHeaderOffset": "0x0",
+    "containerMapSizeOffset": "0x8",
+    "containerNodeLeftOffset": "0x0",
+    "containerNodeRightOffset": "0x10",
+    "containerNodeNilOffset": "0x19",
+    "containerNodeKeyOffset": "0x20",
+    "containerNodeValueOffset": "0x28",
+    "containerIdOffset": "0x18",
+    "containerCapacityOffset": "0x1C",
+    "containerItemOffset": "0x20",
+    "containerNameOffset": "0x28",
+    "containerHasParentOffset": "0x48",
+    "containerClosedOffset": "0x49",
+    "containerUnlockedOffset": "0x4A",
+    "containerPagesOffset": "0x4B",
+    "containerSizeOffset": "0x4C",
+    "containerFirstIndexOffset": "0x50",
+    "containerDequeMapOffset": "0x60",
+    "containerDequeMapSizeOffset": "0x68",
+    "containerDequeOffsetOffset": "0x70",
+    "containerItemCountOffset": "0x78",
+    "containerItemElementStride": "0x8",
+    "containerItemStorageMode": "deque_raw_item_ptr",
+    "containersStatus": "confirmed_runtime_open_container_tree_and_items",
+    "fnGameAutoWalk": "0x162200",
+    "fnLocalPlayerAutoWalk": "0x1805C0",
+    "fnGameAttack": "0x165410",
+    "fnGameFollow": "0x1656E0",
+    "fnGameLook": "0x163790",
+    "fnGameDetailedLook": "0x163B10",
+    "fnGameMove": "0x163E20",
+    "fnGameUse": "0x164570",
+    "fnGameUseWith": "0x164A50",
+    "fnGameTalk": "0x165D40",
+    "fnMapGetTile": "0x22D9A0",
+    "fnMapGetCreatureById": "0x22E5A0",
+    "fnMapGetCreatureByName": "0x14E910",
+    "fnContainerGetItem": "0x13A1E0",
+    "localPlayerAutoWalkVtableSlot": "0xA8",
+    "sigGameAutoWalk": "48 89 5C 24 18 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 D9 48 81 EC 90 00 00 00 4D 8B F0 48 8B F2 48 8B F9 45 33 ED 44 89 6D 17 44 38 69 44 0F 84 ?? ?? ?? ?? 48 8B 01 48 85 C0 0F 84 70 05",
+    "sigLocalPlayerAutoWalk": "48 89 5C 24 18 55 56 57 41 56 41 57 48 81 EC B0 00 00 00 41 0F B6 E8 ?? ?? ?? ?? 8B F9 45 33 FF C7 81 18 04 00 00 FF FF 00 00 C7 81 1C 04 00 00 FF FF 00 00 B8 FF 00 00 00 66 89 81 20 04 00 00",
+    "sigGameAttack": "48 89 5C 24 18 48 89 6C 24 20 56 57 41 56 48 81 EC A0 00 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 90 00 00 00 41 0F B6 E8 ?? ?? ?? ?? 8B D9 48 89 54 24 28 80 79 44 00 0F 84 ?? ?? ?? ??",
+    "sigGameFollow": "48 89 5C 24 18 48 89 6C 24 20 56 57 41 56 48 81 EC A0 00 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 90 00 00 00 48 8B F2 48 8B D9 48 89 54 24 28 C6 41 45 00 80 79 44 00 0F 84 ?? ?? ?? ??",
+    "sigGameLook": "48 89 5C 24 10 48 89 74 24 18 48 89 7C 24 20 55 48 8D 6C 24 A9 48 81 EC B0 00 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 45 47 48 8B F9 33 F6 89 75 D7 40 38 35 4A 95 53 01 0F 84 ?? ?? ?? ?? 48",
+    "sigGameDetailedLook": "48 89 5C 24 18 55 56 57 48 81 EC B0 00 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 A0 00 00 00 41 0F B6 E9 ?? ?? ?? ?? 48 8B F2 48 8B F9 80 79 44 00 0F 84 ?? ?? ?? ?? 48 8B 01 48 85 C0 0F",
+    "sigGameMove": "48 89 5C 24 18 48 89 6C 24 20 56 57 41 56 48 83 EC 50 49 8B F0 48 8B FA 48 8B D9 C7 44 24 30 00 00 00 00 41 BE ?? ?? ?? ?? ?? ?? ?? ?? 0F 4F F1 80 79 44 00 0F 84 ?? ?? ?? ?? 48 8B 01 48 85 C0",
+    "sigGameUse": "48 89 5C 24 18 55 56 57 41 56 41 57 48 8D 6C 24 C9 48 81 EC A0 00 00 00 4C 8B F2 48 8B D9 80 79 44 00 0F 84 ?? ?? ?? ?? 48 8B 01 48 85 C0 0F 84 ?? ?? ?? ?? 80 78 60 00 0F 86 ?? ?? ?? ?? 80 79",
+    "sigGameUseWith": "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 E1 48 81 EC B8 00 00 00 41 8B F9 4D 8B F0 48 8B F2 48 8B D9 44 89 4D B7 80 79 44 00 0F 84 ?? ?? ?? ?? 48 8B 01 48 85 C0 0F 84 ?? ?? ?? ?? 80",
+    "sigGameTalk": "48 89 5C 24 08 57 48 83 EC 20 80 79 44 00 48 8B FA 48 8B D9 74 4C 48 8B 01 48 85 C0 74 44 80 78 60 00 76 3E 80 79 46 00 75 38 48 8B 49 18 48 85 C9 74 2F E8 ?? ?? ?? ?? 84 C0 74 26 48 8B CB E8",
+    "sigMapGetTile": "44 8B 0A 45 85 C9 0F 88 ?? ?? ?? ?? 44 8B 42 04 45 85 C0 0F 88 ?? ?? ?? ?? 4C 0F BF 5A 08 66 45 85 DB 0F 88 ?? ?? ?? ?? 41 81 F9 FF FF 00 00 0F 8D ?? ?? ?? ?? 41 81 F8 FF FF 00 00 0F 8D A3 00",
+    "sigMapGetCreatureById": "48 89 54 24 10 48 83 EC 18 4C 8B CA 48 89 54 24 08 45 33 D2 44 89 14 24 48 8B 91 00 01 00 00 48 8B 42 08 48 8B CA 44 38 50 19 75 1C 0F 1F 40 00 44 39 40 20 73 06 48 83 C0 10 EB 03 48 8B C8 48",
+    "sigMapGetCreatureByName": "48 8B C4 48 89 58 08 48 89 70 18 48 89 78 20 55 41 54 41 55 41 56 41 57 48 8D 68 A1 48 81 EC B0 00 00 00 0F 29 70 C8 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 45 17 4C 8B FA 4C 8B E1 48 89 55 0F 45",
+    "sigContainerGetItem": "48 89 54 24 10 48 83 EC 18 4C 8B D2 33 C0 89 04 24 45 85 C0 78 3E 44 3B 41 78 7D 38 4D 63 C0 4C 8B 49 70 4D 03 C8 49 8B D1 48 D1 EA 48 8B 41 68 48 FF C8 48 23 D0 48 8B 41 60 41 83 E1 01 48 8B",
+    "functionsStatus": "golden_signatures_captured",
+    "lookCaptureStatus": "confirmed_runtime",
+    "lookHookRva": "0x163B10",
+    "lookThingArg": "RDX_indirect",
+    "lookItemIdOffset": "0x38",
+    "lookPosXOffset": "0x18",
+    "lookPosYOffset": "0x1C",
+    "lookPosZOffset": "0x20",
+    "lookInventoryXSentinel": "0xFFFF",
+    "lightStatus": "pending"
+  },
+  "build": {
+    "exe": "C:\\Users\\Usuario\\Downloads\\Olders_V2\\Olders_V2\\Olders_OpenGL.exe",
+    "architecture": "x64",
+    "pointerSize": 8,
+    "rendererHint": "opengl",
+    "fingerprint": {
+      "timestamp": "0x6AA9FA57",
+      "sizeOfImage": "0x17BF000",
+      "entryPointRva": "0xC068D0",
+      "textRva": "0x1000",
+      "textSize": "0xF23E00",
+      "textHashFNV1A64": "0x89D3D35243890EA2"
+    }
+  },
+  "values": {
+    "localPlayer": {
+      "vtableRva": "0x11DA490",
+      "directGlobalRva": "0x169A680",
+      "indirectGlobalRva": "0x169A698",
+      "indirectOwnerOffset": "0x198",
+      "fields": {
+        "x": {
+          "offset": "0x18",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "position_transition",
+          "confidence": 1.0
+        },
+        "y": {
+          "offset": "0x1C",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "position_transition",
+          "confidence": 1.0
+        },
+        "z": {
+          "offset": "0x20",
+          "type": "u8",
+          "status": "confirmed",
+          "method": "xyz_structural_continuity",
+          "confidence": 1.0
+        },
+        "direction": {
+          "offset": "0x64",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "turn_transition",
+          "confidence": 1.0
+        },
+        "health": {
+          "offset": "0x658",
+          "type": "double",
+          "status": "confirmed",
+          "method": "value_transition",
+          "confidence": 0.98
+        },
+        "maxHealth": {
+          "offset": "0x660",
+          "type": "double",
+          "status": "confirmed",
+          "method": "value_pair",
+          "confidence": 0.98
+        },
+        "mana": {
+          "offset": "0x690",
+          "type": "double",
+          "status": "confirmed",
+          "method": "value_transition",
+          "confidence": 0.98
+        },
+        "maxMana": {
+          "offset": "0x698",
+          "type": "double",
+          "status": "confirmed",
+          "method": "value_pair",
+          "confidence": 0.98
+        },
+        "capacity": {
+          "offset": "0x668",
+          "type": "double",
+          "status": "confirmed",
+          "method": "before_after_transition",
+          "confidence": 1.0
+        },
+        "experience": {
+          "offset": "0x678",
+          "type": "double",
+          "status": "confirmed",
+          "method": "local_value_match",
+          "confidence": 0.95
+        },
+        "level": {
+          "offset": "0x680",
+          "type": "double",
+          "status": "confirmed",
+          "method": "local_value_match",
+          "confidence": 0.95
+        }
+      }
+    },
+    "creature": {
+      "fields": {
+        "x": {
+          "offset": "0x18",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "creature_position_shape",
+          "confidence": 0.95
+        },
+        "y": {
+          "offset": "0x1C",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "creature_position_shape",
+          "confidence": 0.95
+        },
+        "z": {
+          "offset": "0x20",
+          "type": "u8",
+          "status": "confirmed",
+          "method": "creature_position_shape",
+          "confidence": 0.95
+        },
+        "id": {
+          "offset": "0x38",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "golden_reference_only",
+          "confidence": 1.0
+        },
+        "name": {
+          "offset": "0x40",
+          "type": "msvc_string",
+          "status": "confirmed",
+          "method": "runtime_reference",
+          "confidence": 1.0
+        },
+        "hpPercent": {
+          "offset": "0x60",
+          "type": "u8",
+          "status": "confirmed",
+          "method": "golden_reference_only",
+          "confidence": 1.0
+        },
+        "direction": {
+          "offset": "0x64",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "creature_direction_shape",
+          "confidence": 0.95
+        },
+        "walkDirection": {
+          "offset": "0x68",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "runtime_reference",
+          "confidence": 1.0
+        },
+        "speed": {
+          "offset": "0xEC",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "runtime_reference",
+          "confidence": 1.0
+        },
+        "skull": {
+          "offset": "0xFC",
+          "type": "u8",
+          "status": "confirmed",
+          "method": "runtime_reference",
+          "confidence": 1.0
+        },
+        "party": {
+          "offset": "0xFD",
+          "type": "u8",
+          "status": "confirmed",
+          "method": "runtime_reference",
+          "confidence": 1.0
+        },
+        "removed": {
+          "offset": "0x1A6",
+          "type": "bool",
+          "status": "confirmed",
+          "method": "runtime_reference",
+          "confidence": 1.0
+        },
+        "walking": {
+          "offset": "0x330",
+          "type": "bool",
+          "status": "confirmed",
+          "method": "runtime_reference",
+          "confidence": 1.0
+        },
+        "states": {
+          "offset": "0x648",
+          "type": "u32",
+          "status": "confirmed",
+          "method": "runtime_reference",
+          "confidence": 1.0
+        }
+      }
+    },
+    "game": {
+      "rva": "0x169A680",
+      "localPlayer": "0x0",
+      "attackTarget": "0x8",
+      "followTarget": "0x10",
+      "containers": "0x20"
+    },
+    "map": {
+      "rva": "0x169A860",
+      "center": {
+        "x": "0x340",
+        "y": "0x344",
+        "z": "0x348"
+      },
+      "aware": {
+        "north": "0x368",
+        "east": "0x36C",
+        "south": "0x370",
+        "west": "0x374"
+      }
+    },
+    "tile": {
+      "vtableRva": "0x11E6D48",
+      "rtti": ".?AVTile@@",
+      "things": {
+        "begin": "0x48",
+        "end": "0x50",
+        "capacity": "0x58",
+        "mode": "raw_pointer_array",
+        "stride": 8
+      }
+    },
+    "classification": {
+      "itemVtableRva": "0x11DA0D8",
+      "localPlayerVtableRva": "0x11DA490",
+      "playerVtableRva": "0x11DA328",
+      "monsterVtableRva": "0x11E6460",
+      "npcVtableRva": "0x11E65C8"
+    },
+    "inventory": {
+      "baseOffset": "0x540",
+      "storageMode": "raw_pointer_array",
+      "slotStride": 8
+    },
+    "item": {
+      "idOffset": "0x38",
+      "countSubtypeOffset": "0x3C",
+      "countSubtypeWidth": 2
+    },
+    "containers": {
+      "ownerOffset": "0x20",
+      "tree": {
+        "header": "0x0",
+        "size": "0x8",
+        "left": "0x0",
+        "right": "0x10",
+        "value": "0x28"
+      },
+      "object": {
+        "name": "0x28",
+        "dequeMap": "0x60",
+        "dequeMapSize": "0x68",
+        "dequeOffset": "0x70",
+        "itemCount": "0x78",
+        "itemStorageMode": "deque_raw_item_ptr",
+        "itemElementStride": 8
+      }
+    }
+  },
+  "resolvers": {
+    "localPlayer": {
+      "preferred": "direct_global",
+      "directGlobalRva": "0x169A680",
+      "indirect": {
+        "globalRva": "0x169A698",
+        "ownerOffset": "0x198"
+      }
+    },
+    "currentFloorTileStorage": {
+      "mode": "runtime_resolve",
+      "neverUseLastConfirmedOffsetAsFixed": true,
+      "path": {
+        "depth": 2,
+        "mapOffset": "0x2C0",
+        "childOffset": "0x0"
+      },
+      "storage": {
+        "mode": "raw_pointer_array",
+        "elementStride": 8
+      },
+      "lastConfirmedOffsetEvidenceOnly": "0x1B0",
+      "linearModel": {
+        "status": "confirmed_from_runtime_observations",
+        "base": "0x120",
+        "stride": "0x18"
+      },
+      "observations": [
+        {
+          "z": 6,
+          "headerOffset": "0x1B0"
+        },
+        {
+          "z": 7,
+          "headerOffset": "0x1C8"
+        }
+      ]
+    },
+    "inventory": {
+      "mode": "semantic_item_array_then_logical_slot_transition",
+      "status": "confirmed_runtime_logical_slot"
+    },
+    "containers": {
+      "mode": "rtti_transition_then_collection_provenance_then_layout",
+      "status": "confirmed_runtime_open_container_tree_and_items"
+    },
+    "functions": {
+      "policy": "unique_signature_then_global_fuzzy_then_family_delta",
+      "status": "golden_signatures_captured"
+    }
+  },
+  "contracts": {
+    "nativeFunctions": {
+      "gameAutoWalk": {
+        "semanticName": "Game::autoWalk",
+        "address": {
+          "rva": "0x162200",
+          "status": "confirmed",
+          "method": "golden_reference",
+          "confidence": 1.0,
+          "directCallsiteCount": 1,
+          "bindingTargetLike": true,
+          "role": "native_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "void",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Game*",
+              "passing": "pointer"
+            },
+            {
+              "name": "dirs",
+              "type": "std::vector<Otc::Direction>",
+              "passing": "by_value_nontrivial"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Game::autoWalk",
+          "binaryValidationStatus": "semantic_source_model_plus_address_confirmed_machine_abi_pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": true,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "localPlayerAutoWalk": {
+        "semanticName": "LocalPlayer::autoWalk",
+        "address": {
+          "rva": "0x1805C0",
+          "status": "confirmed",
+          "method": "golden_reference",
+          "confidence": 1.0,
+          "directCallsiteCount": 1,
+          "bindingTargetLike": true,
+          "role": "native_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "bool",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "LocalPlayer*",
+              "passing": "pointer"
+            },
+            {
+              "name": "destination",
+              "type": "const Position&",
+              "passing": "const_reference"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::LocalPlayer::autoWalk",
+          "binaryValidationStatus": "semantic_source_model_plus_address_confirmed_machine_abi_pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": true,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "gameAttack": {
+        "semanticName": "Game::attack",
+        "address": {
+          "rva": "0x165410",
+          "status": "confirmed",
+          "method": "golden_reference",
+          "confidence": 1.0,
+          "directCallsiteCount": 2,
+          "bindingTargetLike": true,
+          "role": "native_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "void",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Game*",
+              "passing": "pointer"
+            },
+            {
+              "name": "creature",
+              "type": "CreaturePtr",
+              "passing": "by_value_nontrivial"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Game::attack",
+          "binaryValidationStatus": "semantic_source_model_plus_address_confirmed_machine_abi_pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": true,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "gameFollow": {
+        "semanticName": "Game::follow",
+        "address": {
+          "rva": "0x1656E0",
+          "status": "confirmed",
+          "method": "golden_reference",
+          "confidence": 1.0,
+          "directCallsiteCount": 3,
+          "bindingTargetLike": true,
+          "role": "native_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "void",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Game*",
+              "passing": "pointer"
+            },
+            {
+              "name": "creature",
+              "type": "CreaturePtr",
+              "passing": "by_value_nontrivial"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Game::follow",
+          "binaryValidationStatus": "semantic_source_model_plus_address_confirmed_machine_abi_pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": true,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "gameLook": {
+        "semanticName": "Game::look",
+        "address": {
+          "rva": "0x163790",
+          "status": "pending",
+          "method": "golden_reference",
+          "confidence": 0.0,
+          "directCallsiteCount": 0,
+          "bindingTargetLike": true,
+          "role": "binding_target_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "void",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Game*",
+              "passing": "pointer"
+            },
+            {
+              "name": "thing",
+              "type": "const ThingPtr&",
+              "passing": "const_reference"
+            },
+            {
+              "name": "isBattleList",
+              "type": "bool",
+              "passing": "value"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Game::look",
+          "binaryValidationStatus": "pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": false,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "gameDetailedLook": {
+        "semanticName": "Game::detailedLook",
+        "address": {
+          "rva": "0x163B10",
+          "status": "confirmed",
+          "method": "golden_reference",
+          "confidence": 1.0,
+          "directCallsiteCount": 0,
+          "bindingTargetLike": false,
+          "role": "native_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "unknown",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Game*",
+              "passing": "pointer"
+            }
+          ],
+          "status": "pending_reverse_engineering",
+          "referenceSource": "none",
+          "binaryValidationStatus": "pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "pending_validation",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": true,
+          "semanticPrototypeKnown": false,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "gameMove": {
+        "semanticName": "Game::move",
+        "address": {
+          "rva": "0x163E20",
+          "status": "confirmed",
+          "method": "golden_reference",
+          "confidence": 1.0,
+          "directCallsiteCount": 1,
+          "bindingTargetLike": true,
+          "role": "native_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "void",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Game*",
+              "passing": "pointer"
+            },
+            {
+              "name": "thing",
+              "type": "const ThingPtr&",
+              "passing": "const_reference"
+            },
+            {
+              "name": "toPos",
+              "type": "const Position&",
+              "passing": "const_reference"
+            },
+            {
+              "name": "count",
+              "type": "int",
+              "passing": "value"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Game::move",
+          "binaryValidationStatus": "semantic_source_model_plus_address_confirmed_machine_abi_pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": true,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "gameUse": {
+        "semanticName": "Game::use",
+        "address": {
+          "rva": "0x164570",
+          "status": "pending",
+          "method": "golden_reference",
+          "confidence": 0.0,
+          "directCallsiteCount": 0,
+          "bindingTargetLike": true,
+          "role": "binding_target_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "void",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Game*",
+              "passing": "pointer"
+            },
+            {
+              "name": "thing",
+              "type": "const ThingPtr&",
+              "passing": "const_reference"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Game::use",
+          "binaryValidationStatus": "pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": false,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "gameUseWith": {
+        "semanticName": "Game::useWith",
+        "address": {
+          "rva": "0x164A50",
+          "status": "pending",
+          "method": "golden_reference",
+          "confidence": 0.0,
+          "directCallsiteCount": 0,
+          "bindingTargetLike": true,
+          "role": "binding_target_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "void",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Game*",
+              "passing": "pointer"
+            },
+            {
+              "name": "item",
+              "type": "const ItemPtr&",
+              "passing": "const_reference"
+            },
+            {
+              "name": "toThing",
+              "type": "const ThingPtr&",
+              "passing": "const_reference"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Game::useWith",
+          "binaryValidationStatus": "pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": false,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "gameTalk": {
+        "semanticName": "Game::talk",
+        "address": {
+          "rva": "0x165D40",
+          "status": "pending",
+          "method": "golden_reference",
+          "confidence": 0.0,
+          "directCallsiteCount": 0,
+          "bindingTargetLike": true,
+          "role": "binding_target_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "void",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Game*",
+              "passing": "pointer"
+            },
+            {
+              "name": "message",
+              "type": "const std::string&",
+              "passing": "const_reference"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Game::talk",
+          "binaryValidationStatus": "pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": false,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "mapGetTile": {
+        "semanticName": "Map::getTile",
+        "address": {
+          "rva": "0x22D9A0",
+          "status": "confirmed",
+          "method": "golden_reference",
+          "confidence": 1.0,
+          "directCallsiteCount": 33,
+          "bindingTargetLike": true,
+          "role": "native_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "const TilePtr&",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Map*",
+              "passing": "pointer"
+            },
+            {
+              "name": "pos",
+              "type": "const Position&",
+              "passing": "const_reference"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Map::getTile",
+          "binaryValidationStatus": "semantic_source_model_plus_address_confirmed_machine_abi_pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": true,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "mapGetCreatureById": {
+        "semanticName": "Map::getCreatureById",
+        "address": {
+          "rva": "0x22E5A0",
+          "status": "confirmed",
+          "method": "golden_reference",
+          "confidence": 1.0,
+          "directCallsiteCount": 18,
+          "bindingTargetLike": true,
+          "role": "native_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "CreaturePtr",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Map*",
+              "passing": "pointer"
+            },
+            {
+              "name": "id",
+              "type": "uint32",
+              "passing": "value"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Map::getCreatureById",
+          "binaryValidationStatus": "semantic_source_model_plus_address_confirmed_machine_abi_pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": true,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "mapGetCreatureByName": {
+        "semanticName": "Map::getCreatureByName",
+        "address": {
+          "rva": "0x14E910",
+          "status": "confirmed",
+          "method": "golden_reference",
+          "confidence": 1.0,
+          "directCallsiteCount": 1,
+          "bindingTargetLike": true,
+          "role": "native_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "unknown",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Map*",
+              "passing": "pointer"
+            }
+          ],
+          "status": "pending_reverse_engineering",
+          "referenceSource": "none",
+          "binaryValidationStatus": "pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "pending_validation",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": true,
+          "semanticPrototypeKnown": false,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      },
+      "containerGetItem": {
+        "semanticName": "Container::getItem",
+        "address": {
+          "rva": "0x13A1E0",
+          "status": "pending",
+          "method": "golden_reference",
+          "confidence": 0.0,
+          "directCallsiteCount": 0,
+          "bindingTargetLike": true,
+          "role": "binding_target_candidate"
+        },
+        "abi": {
+          "callingConvention": "msvc_x64",
+          "platformStatus": "confirmed_windows_x64",
+          "thisRegister": "RCX",
+          "machineParameterLayoutStatus": "pending_binary_validation",
+          "note": "non-trivial C++ arguments may lower to hidden/reference ABI forms"
+        },
+        "prototype": {
+          "returnType": "ItemPtr",
+          "arguments": [
+            {
+              "name": "this",
+              "type": "Container*",
+              "passing": "pointer"
+            },
+            {
+              "name": "slot",
+              "type": "int",
+              "passing": "value"
+            }
+          ],
+          "status": "reference_source_model",
+          "referenceSource": "OTClient::Container::getItem",
+          "binaryValidationStatus": "pending"
+        },
+        "thread": {
+          "required": "game",
+          "status": "reference_source_expected_runtime_pending",
+          "runtimeValidationStatus": "pending"
+        },
+        "runtimeValidation": {
+          "status": "pending",
+          "mode": "manual_game_action_plus_read_only_state_observation",
+          "nativeFunctionInvokedByMigrator": false
+        },
+        "callability": {
+          "addressConfirmed": false,
+          "semanticPrototypeKnown": true,
+          "machineAbiValidated": false,
+          "threadValidated": false
+        },
+        "callable": false
+      }
+    }
+  },
+  "evidence": {
+    "itemLayout": "confirmed_runtime_container_items_item_vtable",
+    "inventory": "confirmed_runtime_logical_slot",
+    "containers": "confirmed_runtime_open_container_tree_and_items",
+    "classification": "confirmed_runtime_four_class_static_bool"
+  },
+  "validation": {
+    "fields": {
+      "game.localPlayer": {
+        "status": "confirmed",
+        "method": "discovered_runtime_new_build"
+      },
+      "game.attackTarget": {
+        "status": "confirmed",
+        "method": "discovered_runtime_new_build"
+      },
+      "game.followTarget": {
+        "status": "confirmed",
+        "method": "discovered_runtime_selfcheck_pass"
+      },
+      "map.center": {
+        "status": "confirmed",
+        "method": "discovered_runtime_selfcheck_pass"
+      },
+      "tile.things": {
+        "status": "confirmed",
+        "method": "discovered_runtime_selfcheck_pass"
+      },
+      "inventory.baseOffset": {
+        "status": "confirmed",
+        "method": "confirmed_runtime_logical_slot"
+      },
+      "item.idOffset": {
+        "status": "confirmed",
+        "method": "confirmed_runtime_container_items_item_vtable"
+      },
+      "item.countSubtypeOffset": {
+        "status": "confirmed",
+        "method": "confirmed_runtime_container_items_item_vtable"
+      },
+      "containers.ownerOffset": {
+        "status": "confirmed",
+        "method": "confirmed_runtime_open_container_tree_and_items"
+      },
+      "containers.itemStorage": {
+        "status": "confirmed",
+        "method": "confirmed_runtime_open_container_tree_and_items"
+      }
+    },
+    "modules": {
+      "player": "player_discovered_runtime",
+      "game": "discovered_runtime_new_build",
+      "follow": "discovered_runtime_selfcheck_pass",
+      "map": "discovered_runtime_selfcheck_pass",
+      "tileThings": "discovered_runtime_selfcheck_pass",
+      "mapTilePath": "confirmed_runtime_two_positions",
+      "monster": "confirmed_runtime_two_attack_samples",
+      "itemClass": "confirmed_semantic_rtti_item",
+      "playerClass": "confirmed_runtime_followtarget_world_member",
+      "classification": "confirmed_runtime_four_class_static_bool",
+      "npc": "confirmed_semantic_rtti_npc",
+      "inventory": "confirmed_runtime_logical_slot",
+      "itemLayout": "confirmed_runtime_container_items_item_vtable",
+      "containers": "confirmed_runtime_open_container_tree_and_items",
+      "functions": "golden_signatures_captured"
+    }
+  },
+  "features": {
+    "look": {
+      "status": "confirmed_runtime",
+      "architecture": "x64",
+      "hookFunction": "gameDetailedLook",
+      "hookRva": "0x163B10",
+      "hookArgument": "RDX",
+      "thingIndirection": 1,
+      "itemIdOffset": "0x38",
+      "itemIdType": "u32",
+      "position": {
+        "status": "confirmed_runtime",
+        "mode": "thing_fields",
+        "xOffset": "0x18",
+        "yOffset": "0x1C",
+        "zOffset": "0x20"
+      },
+      "context": {
+        "status": "confirmed_runtime",
+        "inventoryXSentinel": 65535,
+        "groundRule": "x != 65535",
+        "containerRule": "x == 65535"
+      },
+      "validation": {
+        "method": "runtime_hook",
+        "confirmedThingExpression": "*(RDX)"
+      }
+    },
+    "hackLight": {
+      "status": "pending",
+      "architecture": "x64",
+      "storage": "unknown",
+      "note": "Olders test environment did not provide a useful dark/light transition."
+    }
+  }
+}

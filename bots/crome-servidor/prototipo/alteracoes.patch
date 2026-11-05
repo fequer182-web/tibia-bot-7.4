@@ -1,0 +1,401 @@
+--- a/src/player.h
++++ b/src/player.h
+@@ -138,6 +138,8 @@
+ 				id = playerAutoID++;
+ 			}
+ 		}
++
++        bool isCromeInternalBot() const { return cromeInternalBot; }
+ 
+ 		static MuteCountMap muteCountMap;
+ 
+@@ -1418,6 +1420,9 @@
+ 		uint16_t getLookCorpse() const override;
+ 		void getPathSearchParams(const Creature* creature, FindPathParams& fpp) const override;
+ 
++        bool cromeInternalBot = false;
++        int64_t cromeLeaseUntil = 0;
++
+ 		friend class Game;
+ 		friend class Npc;
+ 		friend class LuaScriptInterface;
+--- a/src/player.cpp
++++ b/src/player.cpp
+@@ -717,6 +717,10 @@
+ 
+ bool Player::canSee(const Position& pos) const
+ {
++    if (cromeInternalBot) {
++        const Position& here = getPosition();
++        return pos.z == here.z && Position::getDistanceX(here, pos) <= 7 && Position::getDistanceY(here, pos) <= 5;
++    }
+ 	if (!client) {
+ 		return false;
+ 	}
+@@ -868,6 +872,14 @@
+ void Player::sendPing()
+ {
+ 	int64_t timeNow = OTSYS_TIME();
++    if (cromeInternalBot) {
++        if (timeNow > cromeLeaseUntil) {
++            std::cout << "[CROME_INTERNAL] lease expired: " << getName() << std::endl;
++            setAttackedCreature(nullptr); setFollowCreature(nullptr);
++            kickPlayer(true);
++        }
++        return; // Internal lease replaces network pong only for this tagged Player.
++    }
+ 
+ 	bool hasLostConnection = false;
+ 	if ((timeNow - lastPing) >= 5000) {
+@@ -1508,6 +1520,7 @@
+ 	Creature::onThink(interval);
+ 
+ 	sendPing();
++    if (isRemoved()) return;
+ 
+ 	MessageBufferTicks += interval;
+ 	if (MessageBufferTicks >= 1500) {
+@@ -1515,7 +1528,7 @@
+ 		addMessageBuffer();
+ 	}
+ 
+-	if (!getTile()->hasFlag(TILESTATE_NOLOGOUT) && !isAccessPlayer()) {
++	if (!cromeInternalBot && !getTile()->hasFlag(TILESTATE_NOLOGOUT) && !isAccessPlayer()) {
+ 		idleTime += interval;
+ 		const int32_t kickAfterMinutes = g_config.getNumber(ConfigManager::KICK_AFTER_MINUTES);
+ 		if (idleTime > (kickAfterMinutes * 60000) + 60000) {
+--- a/src/protocolgame.cpp
++++ b/src/protocolgame.cpp
+@@ -167,6 +167,10 @@
+ 
+ 	//dispatcher thread
+ 	Player* foundPlayer = g_game.getPlayerByName(name);
++    if (foundPlayer && foundPlayer->isCromeInternalBot()) {
++        disconnectClient("Character is controlled by the internal bot. Stop it before login.");
++        return;
++    }
+ 	if (!foundPlayer || g_config.getBoolean(ConfigManager::ALLOW_CLONES)) {
+ 		player = new Player(getThis());
+ 		player->setName(name);
+@@ -274,7 +278,7 @@
+ 	eventConnect = 0;
+ 
+ 	Player* foundPlayer = g_game.getPlayerByID(playerId);
+-	if (!foundPlayer || foundPlayer->client) {
++	if (!foundPlayer || foundPlayer->client || foundPlayer->isCromeInternalBot()) {
+ 		disconnectClient("You are already logged in.");
+ 		return;
+ 	}
+--- a/src/luascript.h
++++ b/src/luascript.h
+@@ -544,6 +544,19 @@
+ 		// Game
+ 		static int luaGameGetSpectators(lua_State* L);
+ 		static int luaGameGetPlayers(lua_State* L);
++        static int luaGameStartCromeBot(lua_State* L);
++        static int luaGameStopCromeBot(lua_State* L);
++        static int luaPlayerIsCromeInternalBot(lua_State* L);
++        static int luaPlayerCromeHeartbeat(lua_State* L);
++        static int luaPlayerCromeCanStep(lua_State* L);
++        static int luaPlayerCromeStep(lua_State* L);
++        static int luaPlayerCromeUseFood(lua_State* L);
++        static int luaPlayerCromeTakeLoot(lua_State* L);
++        static int luaPlayerCromeUseAccess(lua_State* L);
++        static int luaPlayerCromeUseObject(lua_State* L);
++        static int luaPlayerCromeTakeWorldItem(lua_State* L);
++        static int luaPlayerCromeMoveOwned(lua_State* L);
++
+ 		static int luaGameLoadMap(lua_State* L);
+ 
+ 		static int luaGameGetExperienceStage(lua_State* L);
+--- a/src/luascript.cpp
++++ b/src/luascript.cpp
+@@ -23,6 +23,9 @@
+ #include <fmt/format.h>
+ 
+ #include "luascript.h"
++#include "actions.h"
++#include "ban.h"
++#include "tools.h"
+ #include "chat.h"
+ #include "player.h"
+ #include "game.h"
+@@ -2087,6 +2090,9 @@
+ 
+ 	registerMethod("Game", "getSpectators", LuaScriptInterface::luaGameGetSpectators);
+ 	registerMethod("Game", "getPlayers", LuaScriptInterface::luaGameGetPlayers);
++    registerMethod("Game", "startCromeBot", LuaScriptInterface::luaGameStartCromeBot);
++    registerMethod("Game", "stopCromeBot", LuaScriptInterface::luaGameStopCromeBot);
++
+ 	registerMethod("Game", "loadMap", LuaScriptInterface::luaGameLoadMap);
+ 
+ 	registerMethod("Game", "getExperienceStage", LuaScriptInterface::luaGameGetExperienceStage);
+@@ -2572,6 +2578,17 @@
+ 	registerMethod("Player", "addMapMark", LuaScriptInterface::luaPlayerAddMapMark);
+ 
+ 	registerMethod("Player", "save", LuaScriptInterface::luaPlayerSave);
++    registerMethod("Player", "isCromeInternalBot", LuaScriptInterface::luaPlayerIsCromeInternalBot);
++    registerMethod("Player", "cromeHeartbeat", LuaScriptInterface::luaPlayerCromeHeartbeat);
++    registerMethod("Player", "cromeCanStep", LuaScriptInterface::luaPlayerCromeCanStep);
++    registerMethod("Player", "cromeStep", LuaScriptInterface::luaPlayerCromeStep);
++    registerMethod("Player", "cromeUseFood", LuaScriptInterface::luaPlayerCromeUseFood);
++    registerMethod("Player", "cromeTakeLoot", LuaScriptInterface::luaPlayerCromeTakeLoot);
++    registerMethod("Player", "cromeUseAccess", LuaScriptInterface::luaPlayerCromeUseAccess);
++    registerMethod("Player", "cromeUseObject", LuaScriptInterface::luaPlayerCromeUseObject);
++    registerMethod("Player", "cromeTakeWorldItem", LuaScriptInterface::luaPlayerCromeTakeWorldItem);
++    registerMethod("Player", "cromeMoveOwned", LuaScriptInterface::luaPlayerCromeMoveOwned);
++
+ 	registerMethod("Player", "popupFYI", LuaScriptInterface::luaPlayerPopupFYI);
+ 
+ 	registerMethod("Player", "isPzLocked", LuaScriptInterface::luaPlayerIsPzLocked);
+@@ -17978,3 +17995,250 @@
+ 		luaL_unref(luaState, LUA_REGISTRYINDEX, parameter);
+ 	}
+ }
++
++// Minimal engine adapter: one real offline Player, normal game operations.
++int LuaScriptInterface::luaGameStartCromeBot(lua_State* L)
++{
++    const std::string name = getString(L, 1);
++    auto fail = [L](const char* reason) { lua_pushnil(L); lua_pushstring(L, reason); return 2; };
++    if (g_game.getGameState() != GAME_STATE_NORMAL) return fail("Server is not in normal state");
++    if (name.empty() || g_game.getPlayerByName(name)) return fail("Character missing or already online");
++    size_t internalCount = 0;
++    for (const auto& entry : g_game.getPlayers()) {
++        if (entry.second->isCromeInternalBot()) ++internalCount;
++    }
++    if (internalCount >= 20) return fail("Internal race limit: twenty players");
++    Player* bot = new Player(nullptr);
++    bot->incrementReferenceCounter(); // Own reference survives login callbacks/removal.
++    if (!IOLoginData::loadPlayerByName(bot, name)) {
++        bot->decrementReferenceCounter(); return fail("Could not load existing character");
++    }
++    BanInfo ban;
++    if (bot->getAccountType() != ACCOUNT_TYPE_NORMAL || bot->isAccessPlayer() ||
++        IOBan::isPlayerNamelocked(bot->getGUID()) || IOBan::isAccountBanned(bot->getAccount(), ban) ||
++        bot->getLevel() >= 8 || bot->getHealth() <= 0 || bot->getLastLoginSaved() <= 0 ||
++        (!bot->getInventoryItem(CONST_SLOT_BACKPACK) && !getBoolean(L, 3, false))) {
++        bot->decrementReferenceCounter(); return fail("Use an offline normal level1-7 character already initialized with backpack");
++    }
++    if (g_config.getBoolean(ConfigManager::ONE_PLAYER_ON_ACCOUNT) && g_game.getPlayerByAccount(bot->getAccount())) {
++        bot->decrementReferenceCounter(); return fail("Another character on this account is online");
++    }
++    Item* left = bot->getInventoryItem(CONST_SLOT_LEFT);
++    Item* right = bot->getInventoryItem(CONST_SLOT_RIGHT);
++    if ((!left || left->getAttack() <= 0) && (!right || right->getAttack() <= 0) && !getBoolean(L, 3, false)) {
++        bot->decrementReferenceCounter(); return fail("Equip a melee weapon before starting prototype");
++    }
++    const Position requested = getBoolean(L, 3, false) ? bot->getLoginPosition() : getPosition(L, 2);
++    Position spawn;
++    bool found = false;
++    // Never force-place, stack creatures, or spawn in a field/transition.
++    for (int32_t dx = -1; dx <= 1 && !found; ++dx) {
++        for (int32_t dy = -1; dy <= 1; ++dy) {
++            const int32_t x = int32_t(requested.x) + dx, y = int32_t(requested.y) + dy;
++            if (x < 1 || x > 65534 || y < 1 || y > 65534) continue;
++            const Position candidate(uint16_t(x), uint16_t(y), requested.z);
++            Tile* tile = g_game.map.getTile(candidate);
++            if (tile && tile->getGround() && !tile->getTopCreature() && !tile->getFieldItem() &&
++                !tile->getTeleportItem() && !tile->hasFlag(TILESTATE_FLOORCHANGE) &&
++                tile->queryAdd(0, *bot, 1, 0) == RETURNVALUE_NOERROR) {
++                spawn = candidate; found = true; break;
++            }
++        }
++    }
++    if (!found) { bot->decrementReferenceCounter(); return fail("No free safe spawn next to operator"); }
++    bot->cromeInternalBot = true;
++    bot->cromeLeaseUntil = OTSYS_TIME() + 15000;
++    bot->setFightMode(FIGHTMODE_ATTACK);
++    bot->setChaseMode(false); // Lua chooses safe individual engine steps.
++    if (!g_game.placeCreature(bot, spawn) || bot->isRemoved()) {
++        bot->decrementReferenceCounter(); return fail("Placement/login event rejected character");
++    }
++    bot->lastLoginSaved = std::max<time_t>(time(nullptr), bot->lastLoginSaved + 1);
++    const uint32_t id = bot->getID();
++    bot->decrementReferenceCounter(); // World now owns the live Player.
++    lua_pushnumber(L, id);
++    return 1;
++}
++
++int LuaScriptInterface::luaGameStopCromeBot(lua_State* L)
++{
++    Player* bot = g_game.getPlayerByID(getNumber<uint32_t>(L, 1));
++    if (!bot || !bot->isCromeInternalBot()) { pushBoolean(L, false); return 1; }
++    bot->setAttackedCreature(nullptr); bot->setFollowCreature(nullptr);
++    bot->kickPlayer(true); // Normal logout path updates online status and saves.
++    pushBoolean(L, true); return 1;
++}
++
++int LuaScriptInterface::luaPlayerIsCromeInternalBot(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    pushBoolean(L, bot && bot->isCromeInternalBot()); return 1;
++}
++
++int LuaScriptInterface::luaPlayerCromeHeartbeat(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    if (!bot || !bot->isCromeInternalBot()) { pushBoolean(L, false); return 1; }
++    bot->cromeLeaseUntil = OTSYS_TIME() + 5000;
++    bot->resetIdleTime(); pushBoolean(L, true); return 1;
++}
++
++int LuaScriptInterface::luaPlayerCromeCanStep(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    const Position pos = getPosition(L, 2);
++    Tile* tile = g_game.map.getTile(pos);
++    const bool allowed = bot && bot->isCromeInternalBot() && pos.z == bot->getPosition().z && bot->canSee(pos) &&
++        tile && tile->getGround() && !tile->getTopCreature() && !tile->getFieldItem() && !tile->getTeleportItem() &&
++        (!tile->hasFlag(TILESTATE_FLOORCHANGE) || getBoolean(L, 3, false)) && tile->queryAdd(0, *bot, 1, 0) == RETURNVALUE_NOERROR;
++    pushBoolean(L, allowed); return 1;
++}
++
++int LuaScriptInterface::luaPlayerCromeStep(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    const uint32_t dir = getNumber<uint32_t>(L, 2);
++    if (!bot || !bot->isCromeInternalBot() || dir > 7 || bot->getWalkDelay() > 0 || bot->isMovementBlocked()) {
++        pushBoolean(L, false); return 1;
++    }
++    const Position dest = getNextPosition(static_cast<Direction>(dir), bot->getPosition());
++    Tile* tile = g_game.map.getTile(dest);
++    if (!tile || !tile->getGround() || tile->getTopCreature() || tile->getFieldItem() || tile->getTeleportItem() ||
++        (tile->hasFlag(TILESTATE_FLOORCHANGE) && !getBoolean(L, 3, false)) || tile->queryAdd(0, *bot, 1, 0) != RETURNVALUE_NOERROR) {
++        pushBoolean(L, false); return 1;
++    }
++    bot->startAutoWalk(static_cast<Direction>(dir)); // Normal movement scheduling, no FLAG_NOLIMIT.
++    pushBoolean(L, true); return 1; // Accepted; Lua still verifies actual position.
++}
++
++int LuaScriptInterface::luaPlayerCromeUseFood(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    Item* item = getUserdata<Item>(L, 2);
++    if (!bot || !bot->isCromeInternalBot() || !item || item->isRemoved() || !bot->canDoAction()) {
++        pushBoolean(L, false); return 1;
++    }
++    Cylinder* owner = item->getParent();
++    while (owner && owner != bot) owner = owner->getParent();
++    const uint16_t id = item->getID();
++    if (owner != bot || (id != 2362 && id != 2666 && id != 2667 && id != 2668 && id != 2669 && id != 2670 && id != 2671 && id != 2672 && id != 2673 && id != 2674 && id != 2675 && id != 2676 && id != 2677 && id != 2678 && id != 2679 && id != 2680 && id != 2681 && id != 2682 && id != 2683 && id != 2684 && id != 2685 && id != 2686 && id != 2687 && id != 2688 && id != 2689 && id != 2690 && id != 2691 && id != 2695 && id != 2696 && id != 2787 && id != 2788 && id != 2789 && id != 2790 && id != 2791 && id != 2792 && id != 2793 && id != 2794 && id != 2795 && id != 2796)) {
++        pushBoolean(L, false); return 1;
++    }
++    // Calls this OT's registered food action (satiety, feeding duration, consumption).
++    pushBoolean(L, g_actions->useItem(bot, item->getPosition(), 0, item, false)); return 1;
++}
++
++int LuaScriptInterface::luaPlayerCromeTakeLoot(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    Item** raw = getRawUserdata<Item>(L, 2);
++    Item* item = raw ? *raw : nullptr;
++    Container* destination = getUserdata<Container>(L, 3);
++    if (!bot || !bot->isCromeInternalBot() || !item || item->isRemoved() || (destination && destination->isRemoved())) {
++        pushBoolean(L, false); lua_pushstring(L, "INVALID_CONTEXT"); return 2;
++    }
++    if (!bot->canDoAction()) {
++        pushBoolean(L, false); lua_pushstring(L, "COOLDOWN"); return 2;
++    }
++    Container* corpse = item->getParent() ? item->getParent()->getContainer() : nullptr;
++    Cylinder* receiver = destination ? static_cast<Cylinder*>(destination) : static_cast<Cylinder*>(bot); Cylinder* owner = receiver;
++    while (owner && owner != bot) owner = owner->getParent();
++    const uint16_t id = item->getID();
++    if (!corpse || corpse->getCorpseOwner() != bot->getID() || owner != bot ||
++        !item->isPickupable() || corpse->getPosition().z != bot->getPosition().z ||
++        Position::getDistanceX(corpse->getPosition(), bot->getPosition()) > 1 ||
++        Position::getDistanceY(corpse->getPosition(), bot->getPosition()) > 1) {
++        pushBoolean(L, false); return 1;
++    }
++    const Position from = item->getPosition(), to = (destination ? destination->getPosition() : Position(0xFFFF, 0, 0));
++    Item* moved = nullptr;
++    const ReturnValue result = g_game.internalMoveItem(corpse, receiver, INDEX_WHEREEVER, item, item->getItemCount(), &moved, 0, bot, nullptr, &from, &to);
++    if (moved) *raw = moved; // Preserve userdata if a stack was merged/replaced.
++    pushBoolean(L, result == RETURNVALUE_NOERROR); lua_pushnumber(L, result); return 2;
++}
++
++// Use a visible adjacent access through the registered server action.
++int LuaScriptInterface::luaPlayerCromeUseAccess(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    Item* item = getUserdata<Item>(L, 2);
++    auto fail = [L](const char* reason) { pushBoolean(L, false); lua_pushstring(L, reason); return 2; };
++    if (!bot || !bot->isCromeInternalBot() || !item || item->isRemoved()) return fail("INVALID_CONTEXT");
++    if (!bot->canDoAction() || bot->getWalkDelay() > 0) return fail("COOLDOWN");
++    const Position pos = item->getPosition();
++    if (!bot->canSee(pos) || !Position::areInRange<1, 1, 0>(pos, bot->getPosition())) return fail("OUT_OF_RANGE");
++    Tile* tile = item->getTile();
++    if (!tile || item->getParent() != tile || tile->getFieldItem()) return fail("UNSAFE_TILE");
++    const uint16_t id = item->getID();
++    if (id != 430 && id != 1386 && id != 3678 && !((id == 1945 || id == 1946) && item->getActionId() == 3100)) return fail("UNSUPPORTED_ACCESS");
++    pushBoolean(L, g_actions->useItem(bot, pos, 0, item, false));
++    lua_pushstring(L, "SENT_VERIFY_POSITION"); return 2;
++}
++
++// Normal adjacent object interaction for quest/door validation. No storage writes.
++int LuaScriptInterface::luaPlayerCromeUseObject(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    Item* item = getUserdata<Item>(L, 2);
++    Item* target = lua_gettop(L) >= 3 ? getUserdata<Item>(L, 3) : nullptr;
++    auto fail = [L](const char* reason) { pushBoolean(L, false); lua_pushstring(L, reason); return 2; };
++    if (!bot || !bot->isCromeInternalBot() || !item || item->isRemoved()) return fail("INVALID_CONTEXT");
++    if (!bot->canDoAction() || bot->getWalkDelay() > 0) return fail("COOLDOWN");
++    const Position pos = target ? target->getPosition() : item->getPosition();
++    if (!bot->canSee(pos) || !Position::areInRange<1, 1, 0>(pos, bot->getPosition())) return fail("OUT_OF_RANGE");
++    Tile* tile = g_game.map.getTile(pos);
++    if (!tile || tile->getFieldItem()) return fail("UNSAFE_TILE");
++    if (target) {
++        Cylinder* owner = item->getParent();
++        while (owner && owner != bot) owner = owner->getParent();
++        if (owner != bot || item->getID() < 2087 || item->getID() > 2092 || target->isRemoved() || target->getParent() != tile) return fail("INVALID_KEY_TARGET");
++        pushBoolean(L, g_actions->useItemEx(bot, item->getPosition(), pos, 0, item, false));
++    } else {
++        if (item->getParent() != tile) return fail("NOT_WORLD_OBJECT");
++        const auto& type = Item::items[item->getID()];
++        const bool recognized = item->getActionId() == 65535 || type.isDoor() || item->getID() == 1945 || item->getID() == 1946 || item->getID() == 430 || item->getID() == 1386 || item->getID() == 3678 || item->getID() == 2785;
++        if (!recognized) return fail("UNSUPPORTED_OBJECT");
++        pushBoolean(L, g_actions->useItem(bot, pos, 0, item, false));
++    }
++    lua_pushstring(L, "SENT_VERIFY_OBSERVATION"); return 2;
++}
++
++int LuaScriptInterface::luaPlayerCromeTakeWorldItem(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    Item** raw = getRawUserdata<Item>(L, 2);
++    Item* item = raw ? *raw : nullptr;
++    Container* destination = getUserdata<Container>(L, 3);
++    auto fail = [L](const char* reason) { pushBoolean(L, false); lua_pushstring(L, reason); return 2; };
++    if (!bot || !bot->isCromeInternalBot() || !item || item->isRemoved() || (destination && destination->isRemoved())) return fail("INVALID_CONTEXT");
++    if (!bot->canDoAction()) return fail("COOLDOWN");
++    const Position pos = item->getPosition(); Tile* tile = g_game.map.getTile(pos);
++    Cylinder* receiver = destination ? static_cast<Cylinder*>(destination) : static_cast<Cylinder*>(bot); Cylinder* owner = receiver; while (owner && owner != bot) owner = owner->getParent();
++    const bool ownBody = item->getContainer() && item->getCorpseOwner() == bot->getID();
++    if (owner != bot || !tile || item->getParent() != tile || !item->isPickupable() ||
++        (item->getID() != 2677 && !ownBody) || tile->getFieldItem() ||
++        !Position::areInRange<1, 1, 0>(pos, bot->getPosition())) return fail("NOT_ALLOWED");
++    Item* moved = nullptr; const Position to = (destination ? destination->getPosition() : Position(0xFFFF, 0, 0));
++    ReturnValue result = g_game.internalMoveItem(tile, receiver, INDEX_WHEREEVER, item, item->getItemCount(), &moved, 0, bot, nullptr, &pos, &to);
++    if (moved) *raw = moved;
++    pushBoolean(L, result == RETURNVALUE_NOERROR); lua_pushnumber(L, result); return 2;
++}
++
++int LuaScriptInterface::luaPlayerCromeMoveOwned(lua_State* L)
++{
++    Player* bot = getUserdata<Player>(L, 1);
++    Item** raw = getRawUserdata<Item>(L, 2); Item* item = raw ? *raw : nullptr;
++    int32_t slot = getNumber<int32_t>(L, 3, -1);
++    auto fail = [L](const char* reason) { pushBoolean(L, false); lua_pushstring(L, reason); return 2; };
++    if (!bot || !bot->isCromeInternalBot() || !item || item->isRemoved() || slot < 0 || slot > 10 || slot == 3) return fail("INVALID_CONTEXT");
++    if (!bot->canDoAction()) return fail("COOLDOWN");
++    Cylinder* owner = item->getParent(); while (owner && owner != bot) owner = owner->getParent();
++    Tile* tile = bot->getTile();
++    if (owner != bot || !tile || tile->getFieldItem() || tile->hasFlag(TILESTATE_FLOORCHANGE)) return fail("NOT_OWNED_OR_UNSAFE");
++    Cylinder* destination = slot == 0 ? static_cast<Cylinder*>(tile) : static_cast<Cylinder*>(bot);
++    Position from = item->getPosition(), to = slot == 0 ? bot->getPosition() : Position(0xFFFF, slot, 0);
++    Item* moved = nullptr;
++    ReturnValue result = g_game.internalMoveItem(item->getParent(), destination, slot == 0 ? INDEX_WHEREEVER : slot, item, item->getItemCount(), &moved, 0, bot, nullptr, &from, &to);
++    if (moved) *raw = moved;
++    pushBoolean(L, result == RETURNVALUE_NOERROR); lua_pushnumber(L, result); return 2;
++}

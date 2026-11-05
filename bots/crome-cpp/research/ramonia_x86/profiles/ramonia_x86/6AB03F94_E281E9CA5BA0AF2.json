@@ -1,0 +1,1089 @@
+{
+  "schema": "otclab-ramonia-x86-research-v40",
+  "mode": "read_only_no_hooks_no_internal_calls",
+  "policy": "discovery_rules_only_no_cross_build_rva_oracle",
+  "persistence": {
+    "profileVersion": 40,
+    "checkpoint": "autowalk_deep_abi_v40_confirmed",
+    "resumeEnabled": true
+  },
+  "build": {
+    "exe": "C:\\Users\\Usuario\\AppData\\Roaming\\Ramonia\\RamoniaSummer26\\ramonia_gl-1790824009.exe",
+    "architecture": "x86",
+    "timestamp": "0x6AB03F94",
+    "sizeOfImage": "0xAA2000",
+    "entryPointRva": "0x47F460",
+    "textHashFNV1A64": "0xE281E9CA5BA0AF2",
+    "textHashMethod": "disk_raw_text",
+    "mappedTextHashDiagnostic": "0x68827D868743A2D8",
+    "rendererHint": "opengl"
+  },
+  "rtti": {
+    "Container": {
+      "typeDescriptorRva": "0x8BAC0C",
+      "vtables": [
+        "0x76DBC8"
+      ]
+    },
+    "Item": {
+      "typeDescriptorRva": "0x8BB7B0",
+      "vtables": [
+        "0x76DFC4"
+      ]
+    },
+    "LocalPlayer": {
+      "typeDescriptorRva": "0x8BBA68",
+      "vtables": [
+        "0x76E158"
+      ]
+    },
+    "MapView": {
+      "typeDescriptorRva": "0x90E638",
+      "vtables": [
+        "0x773E60"
+      ]
+    },
+    "Monster": {
+      "typeDescriptorRva": "0x865F14",
+      "vtables": [
+        "0x773F44"
+      ]
+    },
+    "Npc": {
+      "typeDescriptorRva": "0x857FFC",
+      "vtables": [
+        "0x773FF8"
+      ]
+    },
+    "Player": {
+      "typeDescriptorRva": "0x8BB9A4",
+      "vtables": [
+        "0x76E050"
+      ]
+    },
+    "Tile": {
+      "typeDescriptorRva": "0x8737BC",
+      "vtables": [
+        "0x774208"
+      ]
+    },
+    "UIMap": {
+      "typeDescriptorRva": "0x8629FC",
+      "vtables": [
+        "0x774284"
+      ]
+    }
+  },
+  "semanticBinds": {
+    "attack": {
+      "methodRva": "0x79190",
+      "ownerRva": "0xA2D4D0",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "autoWalk": {
+      "methodRva": "0x76860",
+      "ownerRva": "0xA2D4D0",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "closeContainer": {
+      "methodRva": "0x0",
+      "ownerRva": "0x0",
+      "status": "not_found"
+    },
+    "follow": {
+      "methodRva": "0x79300",
+      "ownerRva": "0xA2D4D0",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "getAmbientLight": {
+      "methodRva": "0x0",
+      "ownerRva": "0x0",
+      "status": "not_found"
+    },
+    "getBaseSpeed": {
+      "methodRva": "0x949B0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getCapacity": {
+      "methodRva": "0x94B40",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getContainer": {
+      "methodRva": "0x73A10",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getContainers": {
+      "methodRva": "0x95290",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getCount": {
+      "methodRva": "0x8A0E0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getCreatureById": {
+      "methodRva": "0x1487F0",
+      "ownerRva": "0xA2D600",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "getCreatureByName": {
+      "methodRva": "0x68A60",
+      "ownerRva": "0xA2D490",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "getDirection": {
+      "methodRva": "0x73850",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getFirstIndex": {
+      "methodRva": "0x94C60",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getGround": {
+      "methodRva": "0x1968A0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getHealthPercent": {
+      "methodRva": "0x94900",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getId": {
+      "methodRva": "0x522C0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getInventoryItem": {
+      "methodRva": "0x94E90",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getItem": {
+      "methodRva": "0x58170",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getItemCount": {
+      "methodRva": "0x96340",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getItems": {
+      "methodRva": "0x94AE0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getMagicLevel": {
+      "methodRva": "0x94E10",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getMinimumAmbientLight": {
+      "methodRva": "0x96DA0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getName": {
+      "methodRva": "0x655A0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getOutfit": {
+      "methodRva": "0x656D0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getPosition": {
+      "methodRva": "0x737E0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getShield": {
+      "methodRva": "0x949D0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getSkull": {
+      "methodRva": "0x949C0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getSoul": {
+      "methodRva": "0x94E40",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getSpeed": {
+      "methodRva": "0x949A0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getStamina": {
+      "methodRva": "0x94E50",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getStates": {
+      "methodRva": "0x94CF0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getThing": {
+      "methodRva": "0x173290",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getThingCount": {
+      "methodRva": "0x94230",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getThings": {
+      "methodRva": "0x94090",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getTile": {
+      "methodRva": "0x147F80",
+      "ownerRva": "0xA2D600",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "getTopCreature": {
+      "methodRva": "0x197350",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getTopLookThing": {
+      "methodRva": "0x196C20",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getTopMoveThing": {
+      "methodRva": "0x197AD0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getTopThing": {
+      "methodRva": "0x196490",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "getTopUseThing": {
+      "methodRva": "0x197070",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "hasPages": {
+      "methodRva": "0x94C40",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "hasParent": {
+      "methodRva": "0x94C10",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "isDrawingLights": {
+      "methodRva": "0x96C10",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "isPathable": {
+      "methodRva": "0x198670",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "isUnlocked": {
+      "methodRva": "0x94C30",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "isWalkable": {
+      "methodRva": "0x1984C0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "look": {
+      "methodRva": "0x77640",
+      "ownerRva": "0xA2D4D0",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "move": {
+      "methodRva": "0x77920",
+      "ownerRva": "0xA2D4D0",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "openContainer": {
+      "methodRva": "0x0",
+      "ownerRva": "0x0",
+      "status": "not_found"
+    },
+    "setAmbientLight": {
+      "methodRva": "0x0",
+      "ownerRva": "0x0",
+      "status": "not_found"
+    },
+    "setBaseSpeed": {
+      "methodRva": "0x600C0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setCapacity": {
+      "methodRva": "0x96770",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setCount": {
+      "methodRva": "0x88D80",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setDirection": {
+      "methodRva": "0x96610",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setDrawLights": {
+      "methodRva": "0x969B0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setFirstIndex": {
+      "methodRva": "0x0",
+      "ownerRva": "0x0",
+      "status": "not_found"
+    },
+    "setHasPages": {
+      "methodRva": "0x0",
+      "ownerRva": "0x0",
+      "status": "not_found"
+    },
+    "setHealthPercent": {
+      "methodRva": "0x5F680",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setId": {
+      "methodRva": "0x857D0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setMagicLevel": {
+      "methodRva": "0x90550",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setMinimumAmbientLight": {
+      "methodRva": "0x96A50",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setName": {
+      "methodRva": "0x5F640",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setOutfit": {
+      "methodRva": "0x65610",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setShield": {
+      "methodRva": "0x60260",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setSkull": {
+      "methodRva": "0x601A0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setSoul": {
+      "methodRva": "0x90660",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setSpeed": {
+      "methodRva": "0x5FFD0",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setStamina": {
+      "methodRva": "0x90740",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setStates": {
+      "methodRva": "0x8FB70",
+      "ownerRva": "0x0",
+      "ownerSection": "instance",
+      "status": "offline_semantic"
+    },
+    "setUnlocked": {
+      "methodRva": "0x0",
+      "ownerRva": "0x0",
+      "status": "not_found"
+    },
+    "talk": {
+      "methodRva": "0x796F0",
+      "ownerRva": "0xA2D4D0",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "talkChannel": {
+      "methodRva": "0x79750",
+      "ownerRva": "0xA2D4D0",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "use": {
+      "methodRva": "0x780D0",
+      "ownerRva": "0xA2D4D0",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    },
+    "useWith": {
+      "methodRva": "0x784F0",
+      "ownerRva": "0xA2D4D0",
+      "ownerSection": ".data",
+      "status": "offline_semantic"
+    }
+  },
+  "owners": {
+    "gameRva": "0xA2D4D0",
+    "mapRva": "0xA2D600"
+  },
+  "actions": {
+    "autoWalk": {
+      "methodRva": "0x76860",
+      "ownerRva": "0xA2D4D0",
+      "callingConvention": "x86_ecx_callee_pop_16",
+      "this": {
+        "semantic": "Game",
+        "location": "ecx"
+      },
+      "status": "runtime_confirmed",
+      "args": [
+        {
+          "index": 0,
+          "semantic": "Directions",
+          "abiType": "vector_direction_u32_ref",
+          "status": "runtime_confirmed"
+        },
+        {
+          "index": 1,
+          "semantic": "Position",
+          "abiType": "position_u32_u32_u8_value",
+          "status": "runtime_confirmed"
+        }
+      ],
+      "correction": "V39: only Directions is treated as a formal argument. V38 trailing xyz values matched LocalPlayer but were not proven as callee parameters.",
+      "stackCleanupBytes": 16
+    },
+    "attack": {
+      "methodRva": "0x79190",
+      "ownerRva": "0xA2D4D0",
+      "callingConvention": "x86_thiscall_like",
+      "this": {
+        "semantic": "Game",
+        "location": "ecx"
+      },
+      "status": "runtime_confirmed",
+      "args": [
+        {
+          "index": 0,
+          "semantic": "Creature",
+          "abiType": "shared_object_ptr_value",
+          "status": "runtime_confirmed",
+          "rtti": "Monster",
+          "refCountOffset": "0x4",
+          "ownership": "caller_add_ref_callee_release",
+          "correction": "V34 raw_ptr classifier bypassed shared_object_ptr value semantics"
+        },
+        {
+          "index": 1,
+          "semantic": "Cancel",
+          "abiType": "bool",
+          "status": "runtime_confirmed",
+          "observedRequiredValue": false
+        }
+      ]
+    },
+    "follow": {
+      "methodRva": "0x79300",
+      "ownerRva": "0xA2D4D0",
+      "callingConvention": "x86_thiscall_like",
+      "this": {
+        "semantic": "Game",
+        "location": "ecx"
+      },
+      "status": "runtime_confirmed",
+      "args": [
+        {
+          "index": 0,
+          "semantic": "Creature",
+          "abiType": "shared_object_ptr_value",
+          "status": "runtime_confirmed",
+          "rtti": "Monster",
+          "refCountOffset": "0x4",
+          "ownership": "caller_add_ref_callee_release",
+          "correction": "V34 raw_ptr classifier bypassed shared_object_ptr value semantics"
+        }
+      ]
+    },
+    "look": {
+      "methodRva": "0x77640",
+      "ownerRva": "0xA2D4D0",
+      "callingConvention": "x86_thiscall_like",
+      "this": {
+        "semantic": "Game",
+        "location": "ecx"
+      },
+      "status": "runtime_confirmed",
+      "args": [
+        {
+          "index": 0,
+          "semantic": "Item",
+          "abiType": "shared_object_ptr_ref",
+          "status": "runtime_confirmed",
+          "rtti": "Item"
+        }
+      ]
+    },
+    "move": {
+      "methodRva": "0x77920",
+      "ownerRva": "0xA2D4D0",
+      "callingConvention": "x86_thiscall_like",
+      "this": {
+        "semantic": "Game",
+        "location": "ecx"
+      },
+      "status": "runtime_confirmed",
+      "args": [
+        {
+          "index": 0,
+          "semantic": "Item",
+          "abiType": "shared_object_ptr_ref",
+          "status": "runtime_confirmed",
+          "rtti": "Item"
+        },
+        {
+          "index": 1,
+          "semantic": "Position",
+          "abiType": "position_u32_u32_u8_ref",
+          "status": "runtime_confirmed"
+        },
+        {
+          "index": 2,
+          "semantic": "Count",
+          "abiType": "u32",
+          "status": "runtime_confirmed"
+        }
+      ]
+    },
+    "use": {
+      "methodRva": "0x780D0",
+      "ownerRva": "0xA2D4D0",
+      "callingConvention": "x86_thiscall_like",
+      "this": {
+        "semantic": "Game",
+        "location": "ecx"
+      },
+      "status": "runtime_confirmed",
+      "args": [
+        {
+          "index": 0,
+          "semantic": "Item",
+          "abiType": "shared_object_ptr_ref",
+          "status": "runtime_confirmed",
+          "rtti": "Item"
+        }
+      ]
+    },
+    "useWith": {
+      "methodRva": "0x784F0",
+      "ownerRva": "0xA2D4D0",
+      "callingConvention": "x86_thiscall_like",
+      "this": {
+        "semantic": "Game",
+        "location": "ecx"
+      },
+      "status": "runtime_confirmed",
+      "args": [
+        {
+          "index": 0,
+          "semantic": "Item",
+          "abiType": "shared_object_ptr_ref",
+          "status": "runtime_confirmed",
+          "rtti": "Item"
+        },
+        {
+          "index": 1,
+          "semantic": "Thing",
+          "abiType": "shared_object_ptr_ref",
+          "status": "runtime_confirmed",
+          "rtti": "dynamic"
+        }
+      ]
+    },
+    "talkChannel": {
+      "methodRva": "0x79750",
+      "ownerRva": "0xA2D4D0",
+      "callingConvention": "x86_thiscall_like",
+      "this": {
+        "semantic": "Game",
+        "location": "ecx"
+      },
+      "status": "runtime_confirmed",
+      "args": [
+        {
+          "index": 0,
+          "semantic": "MessageMode",
+          "abiType": "u32",
+          "status": "runtime_confirmed"
+        },
+        {
+          "index": 1,
+          "semantic": "Channel",
+          "abiType": "u32",
+          "status": "runtime_confirmed"
+        },
+        {
+          "index": 2,
+          "semantic": "Message",
+          "abiType": "msvc_string_ref",
+          "status": "runtime_confirmed"
+        }
+      ],
+      "messageSayValue": 1,
+      "defaultChannel": 0,
+      "messageSayStatus": "otclient_family_game_talk_wrapper_crosschecked_pending_live"
+    },
+    "getTopMoveThing": {
+      "methodRva": "0x197AD0",
+      "ownerRva": "0x0",
+      "callingConvention": "x86_thiscall_sret",
+      "stackCleanupBytes": "0x4",
+      "this": {
+        "semantic": "Tile",
+        "location": "ecx"
+      },
+      "status": "runtime_confirmed",
+      "args": [],
+      "return": {
+        "abiType": "shared_object_ptr<Thing>",
+        "status": "runtime_confirmed",
+        "hiddenStorage": {
+          "entryLocation": "[esp+4]",
+          "frameLocation": "[ebp+8]"
+        },
+        "refCount": {
+          "offset": "0x4",
+          "status": "increment_and_release_runtime_confirmed",
+          "ownership": "release_returned_reference_once"
+        },
+        "tileMembership": "runtime_confirmed"
+      },
+      "evidence": {
+        "source": "CromePipeTest topmoveat runtime diagnostic and user uncovertile runs",
+        "tile": {
+          "x": 1220,
+          "y": 1280,
+          "z": 7
+        },
+        "topMoveSequence": [
+          2384,
+          20159,
+          2389
+        ],
+        "abiDiagnosticCommit": "360ecfb",
+        "scope": "exact_build_fingerprint_and_methodRva_only"
+      }
+    }
+  },
+  "gameLayout": {
+    "localPlayerOffset": "0x0",
+    "attackTargetOffset": "0x4",
+    "followTargetOffset": "0x8",
+    "protocolCandidateOffset": "0xC",
+    "attackTargetSource": "runtime_transition",
+    "followTargetSource": "runtime_transition",
+    "status": "runtime_or_static_consistent"
+  },
+  "runtime": {
+    "localPlayerPtr": "0x0",
+    "localPlayerVtableRva": "0x0",
+    "localPlayerVtableMatch": false,
+    "position": {
+      "x": "0xC",
+      "y": "0x10",
+      "z": "0x14",
+      "direction": "0x4C"
+    },
+    "mapCenterCandidates": [],
+    "mapCenterOffset": "0x1AC",
+    "mapCenterStatus": "runtime_xyz_transition",
+    "positionSource": "runtime_transition_plus_xyz_adjacency",
+    "creatureLayout": {
+      "position": {
+        "x": "0xC",
+        "y": "0x10",
+        "z": "0x14",
+        "direction": "0x4C"
+      },
+      "positionStatus": "runtime_target_structural_match",
+      "name": {
+        "kind": "inline_cstring",
+        "offset": "0x30",
+        "status": "runtime_creature_name_mirrored_two_targets",
+        "mirrorKind": "inline_cstring",
+        "mirrorOffset": "0x11C",
+        "mirrorStatus": "runtime_creature_name_mirrored_two_targets"
+      },
+      "hpPercent": {
+        "type": "u8",
+        "offset": "0x48",
+        "status": "runtime_hppercent_two_creatures_damage_reset_percent_0_100"
+      },
+      "id": {
+        "type": "u32",
+        "offset": "0x2C",
+        "status": "runtime_creature_id_semantic_two_targets"
+      },
+      "speed": {
+        "type": "u16",
+        "offset": "0xB8",
+        "status": "semantic_current_build_getter_setter_disambiguated"
+      },
+      "baseSpeed": {
+        "type": "double",
+        "offset": "0xC0",
+        "status": "semantic_current_build_getter_setter_autotype"
+      },
+      "skull": {
+        "type": "u8",
+        "offset": "0xC8",
+        "status": "semantic_current_build_getter_setter_disambiguated"
+      },
+      "shield": {
+        "type": "u8",
+        "offset": "0xC9",
+        "status": "semantic_current_build_getter_setter_disambiguated"
+      },
+      "outfit": {
+        "offset": "0x54",
+        "status": "semantic_current_build_outfit_getter_setter_disambiguated"
+      },
+      "light": {
+        "level": {
+          "type": "",
+          "offset": "0x0",
+          "status": "pending"
+        },
+        "color": {
+          "type": "",
+          "offset": "0x0",
+          "status": "pending"
+        },
+        "candidateA": "0x0",
+        "candidateB": "0x0",
+        "status": "pending"
+      }
+    },
+    "worldLight": {
+      "ownerRva": "0x0",
+      "setDrawLightsRva": "0x969B0",
+      "isDrawingLightsRva": "0x96C10",
+      "setMinimumAmbientLightRva": "0x96A50",
+      "getMinimumAmbientLightRva": "0x96DA0",
+      "uiMapToMapView": "0x2EC",
+      "drawLights": {
+        "type": "u8",
+        "offset": "0x1D4",
+        "status": "semantic_uimap_mapview_setter_getter_draw_lights"
+      },
+      "minimumAmbient": {
+        "type": "float",
+        "offset": "0x1D8",
+        "status": "semantic_uimap_mapview_setter_getter_minimum_ambient"
+      },
+      "candidateA": "0x1D4",
+      "candidateB": "0x1D8",
+      "staticContractStatus": "semantic_uimap_mapview_setter_getter_contract",
+      "status": "semantic_uimap_mapview_setter_getter_contract"
+    },
+    "selectedFields": {
+      "capacityPairA": {
+        "type": "double",
+        "offset": "0x4A0",
+        "status": "runtime_mirrored_scaled_pair_two_transitions"
+      },
+      "capacityPairB": {
+        "type": "double",
+        "offset": "0x4A8",
+        "status": "runtime_mirrored_scaled_pair_two_transitions"
+      },
+      "containerCapacity": {
+        "type": "u32",
+        "offset": "0x10",
+        "status": "semantic_current_build_getter_setter_container_capacity"
+      },
+      "containerId": {
+        "type": "u32",
+        "offset": "0xC",
+        "status": "semantic_getContainer_registry_key_match_reopen"
+      },
+      "containerItemStride": {
+        "type": "bytes",
+        "offset": "0x4",
+        "status": "runtime_transition_container_items_rtti_semantic"
+      },
+      "containerItems": {
+        "type": "deque",
+        "offset": "0x40",
+        "status": "runtime_transition_container_items_rtti_semantic"
+      },
+      "containerName": {
+        "type": "msvc_string",
+        "offset": "0x18",
+        "status": "runtime_transition_container_name_string_semantic"
+      },
+      "experience": {
+        "type": "double",
+        "offset": "0x4B0",
+        "status": "unique_typed_value"
+      },
+      "health": {
+        "type": "double",
+        "offset": "0x490",
+        "status": "unique_typed_value"
+      },
+      "inventoryArray": {
+        "type": "ptr_array10",
+        "offset": "0x400",
+        "status": "runtime_inventory_slot_transition_item_rtti"
+      },
+      "inventoryStride": {
+        "type": "bytes",
+        "offset": "0x4",
+        "status": "runtime_inventory_slot_transition_item_rtti"
+      },
+      "itemCount": {
+        "type": "u16",
+        "offset": "0x30",
+        "status": "semantic_current_build_item_count_body_getter_setter"
+      },
+      "itemId": {
+        "type": "u16",
+        "offset": "0x2E",
+        "status": "semantic_current_build_item_id_count_adjacency_multi_item"
+      },
+      "level": {
+        "type": "double",
+        "offset": "0x4B8",
+        "status": "unique_typed_value"
+      },
+      "magicLevel": {
+        "type": "double",
+        "offset": "0x4D8",
+        "status": "semantic_current_build_getter_setter_autotype"
+      },
+      "mana": {
+        "type": "double",
+        "offset": "0x4C8",
+        "status": "runtime_levelup_pair_order_structural_pending_differential"
+      },
+      "maxHealth": {
+        "type": "double",
+        "offset": "0x498",
+        "status": "unique_typed_value"
+      },
+      "maxMana": {
+        "type": "double",
+        "offset": "0x4D0",
+        "status": "runtime_levelup_pair_order_structural_pending_differential"
+      },
+      "openContainersMap": {
+        "type": "inline_registry",
+        "offset": "0x10",
+        "status": "semantic_getContainer_exact_inline_root_closed_open_reopen"
+      },
+      "openContainersNodeKey": {
+        "type": "u32",
+        "offset": "0x10",
+        "status": "semantic_inline_registry_node_key"
+      },
+      "openContainersNodeValue": {
+        "type": "ContainerPtr",
+        "offset": "0x14",
+        "status": "semantic_inline_registry_node_value"
+      },
+      "soul": {
+        "type": "double",
+        "offset": "0x4F0",
+        "status": "semantic_current_build_getter_setter_autotype"
+      },
+      "stamina": {
+        "type": "double",
+        "offset": "0x4F8",
+        "status": "semantic_current_build_getter_setter_autotype"
+      },
+      "states": {
+        "type": "u32",
+        "offset": "0x480",
+        "status": "semantic_current_build_getter_setter_autotype"
+      },
+      "tileThings": {
+        "type": "vector_thing_handle",
+        "offset": "0x24",
+        "status": "runtime_tile_exact_rtti_localplayer_two_sqm_gold2148_aba_canonical_v30"
+      },
+      "tileThingsCap": {
+        "type": "offset",
+        "offset": "0x2C",
+        "status": "runtime_tile_exact_rtti_localplayer_two_sqm_gold2148_aba_canonical_v30"
+      },
+      "tileThingsElem": {
+        "type": "bytes",
+        "offset": "0x4",
+        "status": "runtime_tile_exact_rtti_localplayer_two_sqm_gold2148_aba_canonical_v30"
+      },
+      "tileThingsEnd": {
+        "type": "offset",
+        "offset": "0x28",
+        "status": "runtime_tile_exact_rtti_localplayer_two_sqm_gold2148_aba_canonical_v30"
+      },
+      "tileVtableRva": {
+        "type": "rva",
+        "offset": "0x774208",
+        "status": "runtime_tile_exact_rtti_localplayer_two_sqm_gold2148_aba_canonical_v30"
+      }
+    }
+  },
+  "pipeBaseline": {
+    "id": "ramonia_pipe_current_v1",
+    "policy": "current_build_discovery_then_runtime_abi",
+    "requiredAbi": [
+      "autoWalk",
+      "attack",
+      "follow",
+      "look",
+      "move",
+      "use",
+      "useWith",
+      "talkChannel",
+      "getTopMoveThing"
+    ],
+    "tileAccessPolicy": "runtime_getTopMoveThing_same_tile_membership",
+    "uncoverPolicy": "one_blocker_then_reread",
+    "toolUsePolicy": "require_exposed_target_then_useWith",
+    "abiPromotion": "static_or_entry_only_evidence_is_not_confirmation",
+    "binds": {
+      "autoWalk": "discovered",
+      "attack": "discovered",
+      "follow": "discovered",
+      "look": "discovered",
+      "move": "discovered",
+      "use": "discovered",
+      "useWith": "discovered",
+      "talkChannel": "discovered",
+      "getTile": "discovered",
+      "getCreatureById": "discovered",
+      "getPosition": "discovered",
+      "getThings": "discovered",
+      "getThingCount": "discovered",
+      "getTopMoveThing": "discovered",
+      "isWalkable": "discovered",
+      "isPathable": "discovered",
+      "getInventoryItem": "discovered",
+      "getId": "discovered",
+      "getCount": "discovered",
+      "getContainers": "discovered",
+      "getItems": "discovered",
+      "getContainer": "discovered",
+      "getCapacity": "discovered",
+      "getName": "discovered"
+    },
+    "requiredFields": [
+      "tileThings",
+      "tileThingsElem",
+      "tileVtableRva",
+      "itemId",
+      "itemCount",
+      "inventoryArray",
+      "inventoryStride",
+      "containerItems",
+      "openContainersMap"
+    ]
+  }
+}

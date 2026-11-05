@@ -1,0 +1,34 @@
+OTCLab BuildExplorer V2.7 / BuildMigrator V4.9.2 DIRECT BIND + LOOK AUTO
+
+BASE
+- Preserva o core V4.9 DIRECT BIND e a validacao ativa da V2.6.
+- Preserva os contratos ja confirmados do Classico e Olders OpenGL.
+
+LOOK AUTO - BUILD NOVA
+- Remove a exigencia de criar um probe isolado so para descobrir ABI de Look.
+- Usa breakpoint temporario de 1 byte (INT3) + Vectored Exception Handler.
+- Nao depende de copiar um prologo desconhecido para trampoline.
+- Captura RCX/RDX/R8/R9 no evento real de Look.
+- Testa REG e *(REG).
+- Usa Item VTable confirmada como filtro quando disponivel.
+- Usa o itemIdOffset ja descoberto da propria build.
+- Exige duas amostras de IDs diferentes no mesmo caminho de ABI.
+- Defaults sugeridos: 3031 e 3552, mas editaveis por OT/build.
+- Ate 3 ciclos antes de devolver o controle ao R/S/Q do wizard.
+- Quando confirmado, salva hook function/RVA/argument/indirection/ID offset no BuildProfile.
+- Contratos auto-descobertos confirmed_runtime sao preservados em reruns do mesmo fingerprint.
+
+LIGHT
+- Mantida descoberta por BASE -> TOCHA -> BASE e/ou BASE -> utevo lux -> BASE.
+- Mantido write/restore ativo antes de confirmed_runtime_write.
+
+PROFILE DE RETESTE
+- Incluido o profile parcial Olders DX9 6AA9FB5B / 9F444FE4962780AE para testar o novo Look AUTO sem repetir todo o discovery quando o arquivo ainda nao existir na pasta Build.
+
+V2.7.1 - SCAPE PLAYER FOLLOW REBIND / LOOP FIX
+- Corrige loop infinito em STAGE 6B REMOTE PLAYER SAMPLE.
+- Maximo de 3 rodadas; depois retorna ao orquestrador R/S/Q.
+- Quando FollowTarget raw pointer nao existe diretamente em Tile::things,
+  tenta rebind conservador para exatamente um RTTI Player na mesma Position.
+- Nunca promove se houver 0 ou mais de 1 candidato posicional Player.
+- Profile Scape de referencia incluido para reaproveitar discovery ja confirmado.

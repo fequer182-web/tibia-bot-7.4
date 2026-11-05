@@ -1,0 +1,21 @@
+OTCLab BuildExplorer V2.7 EXTERNAL PORT - TESTE RAPIDO
+======================================================
+
+1) Rode build.bat.
+2) Abra o cliente e entre no personagem.
+3) Rode Build\OTCLab_BuildExplorer_V2_7_EXTERNAL_PORT.exe.
+4) Digite o PID.
+5) Digite HP/MaxHP/Mana/MaxMana/XP/Level/Capacity.
+6) Escolha o candidato LocalPlayer.
+7) Faça os testes de movimento/direcao.
+8) Aguarde POINTER PATH (direto + indireto).
+9) Se GAME OWNER fechar, faca AttackTarget/FollowTarget se quiser.
+10) Faça Map Center se solicitado e conveniente.
+11) Aguarde EXTERNAL STATIC FUNCTION SIGNATURES.
+12) Faça Light com BASE -> TOCHA -> BASE; utevo lux e opcional.
+13) Abra Runtime Watch.
+14) Envie o log completo + JSON em Build\.
+
+Observacao:
+- Look pode localizar Game::look/detailedLook estaticamente, mas ABI runtime continua pending sem injecao/hook.
+- Nenhuma memoria do cliente e escrita.

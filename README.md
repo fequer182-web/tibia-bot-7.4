@@ -1,8 +1,10 @@
-# Cromin para Ancientia DX
+# Tibia Bot 7.4
 
 Painel compacto para Windows com leitura de personagem, cavebot por setas, ataque por hotkey e teste de abertura de corpos. A versão principal é para **AncientiaDX x86**. O código anterior de Antica está em `legado/antica`.
 
-## Instalação
+O [catálogo de bots](docs/BOTS.md) reúne as outras versões e os laboratórios. O [guia de localização](docs/LOCALIZACAO.md) indica como encontrar o PID, reconhecer a build, buscar valores e testar um perfil ou pipe.
+
+## Instalação do compacto Ancientia
 
 1. Baixe ou clone o repositório e instale Python para Windows com Tkinter.
 2. Abra o Ancientia pelo launcher e entre no personagem.

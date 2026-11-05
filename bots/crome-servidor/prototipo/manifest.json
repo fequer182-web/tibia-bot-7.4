@@ -1,0 +1,22 @@
+{
+  "src/player.h": {
+    "originalSha256": "d57a7f91218a1219418470c5cf92f365f93a387bf539cd6e403268c5582502e0",
+    "patchedSha256": "fe567bafa5b5cab079311a6a5db407b5fc8ce617cff23f03461d0dffeb94d748"
+  },
+  "src/player.cpp": {
+    "originalSha256": "a2831b80bb2ef080e92015b7c7796fe8e3f4163f88efac1733a5aa98f27c0b22",
+    "patchedSha256": "2d292ba16ef3cc7a9ae62f92fab30076b2e94ac3a257a5406e26465bb1f7bd09"
+  },
+  "src/protocolgame.cpp": {
+    "originalSha256": "a385c00494beb245cbfd865988159fe575bc31ffb274189719326041677f96ec",
+    "patchedSha256": "9680e40e10cf39b00de48a8d2f08deb7f6b9a92b6666ade8abad31f914a5da00"
+  },
+  "src/luascript.h": {
+    "originalSha256": "9967f3dce94f3c3ab1fab3e859566f01518ec1008d00306ae8ee906f595054ff",
+    "patchedSha256": "4930a1d0f4ec43d2d14169bfdc893807aaf47b69a612091452257f1be26a1314"
+  },
+  "src/luascript.cpp": {
+    "originalSha256": "62f85ed7b1292628c644e603af5d809df2cd13b0c952398ab2b90552330c3184",
+    "patchedSha256": "76bae85d11c5dae0da22ba0a8edb0a8fe027270b4a823d136cd2344738210c35"
+  }
+}

@@ -1,0 +1,36 @@
+OTCLab BuildExplorer V2.7 - TESTE RAPIDO
+
+1) Feche/desinjete probes antigos.
+2) Rode build.bat.
+3) Injete:
+   Build\OTCLab_BuildExplorer_V2_7_X64_LOOK_AUTO.dll
+
+BUILD NOVA - LOOK AUTO
+- Deixe o wizard descobrir Player/Game/Map/Item/Functions normalmente.
+- Em X64 FEATURES responda S para LOOK AUTO DISCOVERY.
+- A DLL sugere:
+    Item A = 3031
+    Item B = 3552
+  Esses IDs NAO sao universais. Responda N e informe outros se necessario.
+- Para cada amostra, de Look no item correto e depois pressione ENTER.
+- Esperado quando fechar:
+    LOOK ABI CONFIRMED
+    Function       : gameLook ou gameDetailedLook
+    Argument       : RCX/RDX/R8/R9
+    Indirection    : 0 ou 1
+    Item ID offset : +...
+    Samples        : A / B
+    Status         : confirmed_runtime
+
+FALHA
+- A V2.7 tenta ate 3 ciclos.
+- Depois o wizard oferece R / S / Q.
+
+LIGHT
+- Se ainda estiver pending, responda S na calibracao READ-ONLY.
+- Faça BASE -> TOCHA -> BASE e/ou BASE -> utevo lux -> BASE conforme solicitado.
+- Se encontrar candidato, aceite o teste ativo apenas quando puder observar a mudanca.
+- O teste ativo deve forcar 15 por ~4s e RESTAURAR o valor original.
+
+CLASSICO / OLDERS OPENGL
+- Continuam usando os contratos ja confirmados das versoes anteriores.

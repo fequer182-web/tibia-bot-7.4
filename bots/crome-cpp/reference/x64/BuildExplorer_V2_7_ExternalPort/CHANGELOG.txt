@@ -1,0 +1,22 @@
+V2.8 GUIADO — integrado na pasta V2.7 ExternalPort
+================================================
+- Descoberta guiada de atributos com duas mudanças reais para confirmação.
+- Candidatos double/float/uint32/uint64 e evidências persistidas em guidedFields.
+- Seleção explícita quando há vários LocalPlayers; nenhuma escolha automática.
+- Âncora por vida máxima e gate estrutural que tolera HP regenerando no scan.
+- Validação do caminho/vtable durante a etapa guiada; falhas não viram zeros.
+- Perfis de referência e gravação final suportam caminhos com acentos.
+- Gravação temporária antes de substituir o JSON existente.
+- Mantidos nome do EXE, build.bat, testes anteriores e modo sem escrita/injeção.
+
+V2.7 EXTERNAL PORT
+==================
+
+- Port externo baseado no V2.8 READ-ONLY que ja funcionou sem injecao.
+- Mantem fingerprint + LocalPlayer + Position + Light externos.
+- Adiciona pointer path indireto (module -> owner -> LocalPlayer).
+- Adiciona Game owner + AttackTarget/FollowTarget discovery guiado quando possivel.
+- Adiciona Map Center externo por transicoes quando a copia esta no modulo.
+- Adiciona scanner estatico de 14 funcoes usando os profiles de referencia da V2.7.
+- Look salva candidato estatico de Game::detailedLook/Game::look quando assinatura unica bater.
+- Nenhum hook/write/breakpoint no processo alvo.

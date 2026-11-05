@@ -1,0 +1,2 @@
+#include "app/BotController.hpp"
+namespace crome { BotController::BotController(CromeApi& a):api_(a),state_(a){} void BotController::tick(){auto s=state_.snapshot(); healing.tick(s,api_,scheduler_,cooldown_); support.tick(s,api_,scheduler_,cooldown_); runeMaker.tick(s,api_,scheduler_,cooldown_); targeting.tick(s,api_,scheduler_); cavebot.tick(s,api_,scheduler_); looter.tick(s,api_,scheduler_); alarms.tick(s); hotkeys.tick(); scheduler_.runOne();} }
