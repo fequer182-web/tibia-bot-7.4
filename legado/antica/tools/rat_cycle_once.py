@@ -1,0 +1,7 @@
+from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src'))
+from cromin.actions.combat_cycle import main
+if __name__=='__main__':
+    try:raise SystemExit(main())
+    except Exception as error:print('[ERRO]',error,file=sys.stderr);raise SystemExit(1)
