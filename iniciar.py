@@ -10,7 +10,7 @@ def main():
     parser.add_argument('--personagem',default='')
     parser.add_argument('--self-test',action='store_true')
     args=parser.parse_args()
-    root=tk.Tk();root.title('Cromin');root.geometry('300x132');root.resizable(False,False)
+    root=tk.Tk();root.title('Cromin');root.geometry('300x164');root.resizable(False,False)
     detail=tk.Toplevel(root);detail.withdraw()
     panel=Panel(detail,args.pid,args.personagem)
     detail.protocol('WM_DELETE_WINDOW',detail.withdraw)
@@ -30,11 +30,22 @@ def main():
              ('Loot',lambda:show(3)),('Luz',lambda:show(2)),('Healing',None)]
     for i,(label,callback) in enumerate(entries):
         ttk.Button(grid,text=label,command=callback,state='normal' if callback else 'disabled').grid(row=i//3,column=i%3,sticky='ew',padx=1,pady=1)
+    ttk.Button(root,text='Ligar todos',command=panel.start_all).pack(fill='x',padx=5,pady=3)
     footer=tk.StringVar(value='Offline · PID: 0')
     ttk.Label(root,textvariable=footer,wraplength=290).pack(anchor='w',padx=5,pady=3)
     def refresh():
         state=panel.sample
-        footer.set((f"{state['name']} · PID {panel.pid.get()}" if state else 'Offline · clique Conectar'))
+        if state and panel.runner:
+            modules = (
+                ('Cavebot', panel.runner.cave),
+                ('Targeting', panel.runner.attack),
+                ('Loot', panel.loot and panel.loot.enabled),
+                ('Luz', panel.light_enabled.get()),
+            )
+            active = ', '.join(name for name, enabled in modules if enabled)
+            footer.set(f"{state['name']} · PID {panel.pid.get()}\n{active or 'Automações desligadas'}")
+        else:
+            footer.set('Offline · clique Conectar')
         root.after(500,refresh)
     def close():
         panel.disconnect();root.destroy()

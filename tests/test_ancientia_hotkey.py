@@ -2,7 +2,7 @@ from pathlib import Path
 import sys
 import threading
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock,patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from ancientia_funcional import Panel
 from cromin.core.ancientia_runner import Runner
@@ -63,6 +63,34 @@ class Tests(unittest.TestCase):
         p.hotkey_frame.pack.assert_called_once()
         p.runner.attack=True;p.change_attack_key()
         self.assertFalse(p.runner.attack);self.assertFalse(p.hotkey_confirmed.get())
+
+
+    def test_start_all_validates_before_enabling_and_arms_every_module(self):
+        p=self.panel()
+        p.waypoints=[(101,100,7)];p.repeat=Variable(True)
+        p.light=Mock();p.light_enabled=Variable(False);p.loot=Mock(enabled=False)
+        p.memory=Mock();p.base=0x400000
+        p.runner.cave=True
+        with self.assertRaisesRegex(ValueError,'Calibre'):
+            p.start_all()
+        self.assertTrue(p.runner.cave)
+        self.assertFalse(p.runner.attack or p.loot.enabled or p.light_enabled.get())
+        p.light.tick.assert_not_called()
+        p.calibration={'tile':32}
+        with patch('ancientia_funcional.inventory',return_value=[{'containerId':0}]):
+            p.start_all()
+        self.assertTrue(p.runner.cave and p.runner.attack and p.loot.enabled and p.light_enabled.get())
+        p.light.tick.assert_called_once_with(True,31)
+
+    def test_calibration_preserves_armed_modules(self):
+        p=self.panel()
+        p.runner.cave=p.runner.attack=True
+        p.loot=Mock(enabled=True);p.light_enabled=Variable(True)
+        p.window=Mock();p.generation=1;p.manual_epoch=0
+        p.calibration_status=Variable('')
+        p.calibrate('center')
+        self.assertTrue(p.runner.cave and p.runner.attack and p.loot.enabled and p.light_enabled.get())
+        self.assertTrue(p.input_preparing)
 
 
 if __name__=='__main__':unittest.main(verbosity=2)

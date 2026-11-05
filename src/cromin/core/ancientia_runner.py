@@ -22,6 +22,12 @@ class Runner:
         self.status=reason
         self.record('stop',{'reason':reason})
 
+    def stop_cave(self,reason):
+        self.cave=False
+        self.pending_step=None
+        self.status=reason
+        self.record('cave_stopped',{'reason':reason})
+
     def tick(self,sample,focused,now):
         if sample['health']<=0:
             self.stop('Personagem sem vida');return
@@ -36,25 +42,21 @@ class Runner:
                 self.record('attack_target_confirmed',target)
             elif now-self.pending_attack>=1.5:
                 self.pending_attack=None;self.attack_failures+=1
-                if self.attack_failures>=3:
-                    self.attack=False
-                    self.status='Ataque pausado: tres solicitacoes sem alvo'
-                    self.record('attack_paused',{'reason':'tres solicitacoes sem alvo'})
-                self.next_attack=now+3
+                self.next_attack=now+(8 if self.attack_failures>=3 else 3)
             else:
                 self.status='Conferindo alvo do atalho';return
         position=tuple(sample['position'])
         if self.pending_step:
             previous,started=self.pending_step
             if position[2]!=previous[2]:
-                self.stop('Mudanca de andar; rota interrompida');return
+                self.stop_cave('Mudanca de andar; rota interrompida');return
             if position!=previous:
                 self.pending_step=None;self.failures=0
                 self.record('step_observed',{'before':previous,'after':position})
             elif now-started>=1.5:
                 self.pending_step=None;self.failures+=1
                 if self.failures>=3:
-                    self.stop('Sem progresso: parede, chat ou tecla nao aceita');return
+                    self.stop_cave('Sem progresso: parede, chat ou tecla nao aceita');return
                 self.next_action=now+0.3
             else:
                 self.status='Conferindo passo';return
@@ -78,13 +80,13 @@ class Runner:
                 return
         if not self.cave:return
         if not self.route:
-            self.stop('Rota vazia');return
+            self.stop_cave('Rota vazia');return
         dest=tuple(self.route[self.index])
         if len(dest)!=3 or dest[2]!=position[2]:
-            self.stop('Waypoint em outro andar');return
+            self.stop_cave('Waypoint em outro andar');return
         distance=abs(dest[0]-position[0])+abs(dest[1]-position[1])
         if distance>30:
-            self.stop('Waypoint a mais de 30 SQMs; grave pontos proximos');return
+            self.stop_cave('Waypoint a mais de 30 SQMs; grave pontos proximos');return
         if dest==position:
             self.index+=1
             if self.index>=len(self.route):

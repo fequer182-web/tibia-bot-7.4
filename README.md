@@ -28,6 +28,8 @@ No compacto, abra **Conectar**, informe o PID do DX e conecte. Se o Windows nega
 | Luz | Testa intensidade de luz com escrita de um byte e tentativa de restauração ao desligar. | Efeito visual pendente de confirmação. |
 | Healing | Reservado para uma adaptação futura. | Indisponível. |
 
+**Ligar todos** ativa Cavebot, Targeting, Loot e Luz juntos. Grave um waypoint, configure o Targeting, calibre o mapa e abra a bag 0 antes de usar. A caminhada aguarda o combate e a tentativa de loot para que as ações usem o teclado e mouse em ordem.
+
 **F8 ou Parar** desliga as automações. O cliente precisa estar em primeiro plano para receber teclas ou cliques. Fechar a janela de configuração só a oculta; encerre pelo compacto para desconectar.
 
 ### Loot

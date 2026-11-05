@@ -27,7 +27,7 @@ ROOT=Path(__file__).resolve().parent
 class Panel:
     def __init__(self,window,pid,expected_name=''):
         self.window=window;self.memory=None;self.base=None;self.keyboard=None;self.runner=None;self.sample=None
-        self.identity=None;self.light_states=[];self.light=None;self.loot=None;self.manual_epoch=0
+        self.identity=None;self.light_states=[];self.light=None;self.loot=None;self.manual_epoch=0;self.input_preparing=False
         self.calibration=None;self.center_point=None;self.monsters=[]
         self.scan_thread=None;self.scan_cancel=threading.Event();self.scan_queue=queue.Queue()
         self.generation=0;self.next_scan=0
@@ -121,7 +121,7 @@ class Panel:
     def guarded(self,fn):
         try:return fn()
         except (RuntimeError,ValueError,OSError,KeyError) as error:
-            self.stop(str(error));messagebox.showerror('Cromin',str(error));return None
+            self.status.set(str(error));messagebox.showerror('Cromin',str(error));return None
 
     def connect(self):
         def run():
@@ -151,10 +151,12 @@ class Panel:
         def begin():
             self.need_connection()
             if not self.calibration:raise ValueError('Calibre os dois pontos do mapa primeiro.')
-            self.stop('Volte ao jogo: varredura em 5 segundos')
+            self.manual_epoch+=1;self.input_preparing=True
+            self.status.set('Volte ao jogo: varredura em 5 segundos')
             generation=self.generation;epoch=self.manual_epoch
             def finish():
                 if generation!=self.generation or epoch!=self.manual_epoch:return
+                self.input_preparing=False
                 def run():
                     self.need_connection()
                     if not self.keyboard.focused() or self.keyboard.stop_pressed():
@@ -170,15 +172,21 @@ class Panel:
         try:return read_monster(self.memory,self.base,int(address,0),allow_dead=True)
         except (OSError,RuntimeError,ValueError):return None
 
+    def check_loot(self):
+        self.need_connection()
+        if not self.calibration:raise ValueError('Calibre os dois pontos do mapa na aba Loot.')
+        if not any(b['containerId']==0 for b in inventory(self.memory,self.base)):
+            raise ValueError('Abra a bag 0 primeiro.')
+
+    def arm_loot(self):
+        self.loot.enabled=True
+        self.status.set('Loot armado para corpos adjacentes. Volte ao jogo; F8 para parar.')
+        self.record('loot_armed',{'mainBag':0})
+
     def start_loot(self):
         def run():
-            self.need_connection()
-            if not self.calibration:raise ValueError('Calibre os dois pontos do mapa na aba Loot.')
-            if not any(b['containerId']==0 for b in inventory(self.memory,self.base)):
-                raise ValueError('Abra a bag 0 primeiro.')
-            self.loot.reset();self.loot.enabled=True
-            self.status.set('Loot armado para corpos adjacentes. Volte ao jogo; F8 para parar.')
-            self.record('loot_armed',{'mainBag':0})
+            self.check_loot()
+            self.arm_loot()
         self.guarded(run)
 
     def need_connection(self):
@@ -197,6 +205,7 @@ class Panel:
 
     def stop(self,reason='Parado por F8 ou botao'):
         self.manual_epoch=getattr(self,'manual_epoch',0)+1
+        self.input_preparing=False
         if self.runner:self.runner.stop(reason)
         if self.loot:self.loot.reset()
         self.scan_cancel.set()
@@ -228,7 +237,7 @@ class Panel:
 
     def add(self):
         def run():
-            self.need_connection();self.stop('Gravando rota')
+            self.need_connection()
             sample=read_state(self.memory,self.base)
             if len(self.waypoints)>=128:raise ValueError('Limite de 128 waypoints')
             self.waypoints.append(list(sample['position']));self.save_route()
@@ -236,43 +245,67 @@ class Panel:
 
     def remove(self):
         def run():
-            self.stop('Editando rota')
             selection=self.route.curselection()
             if selection:self.waypoints.pop(selection[0]);self.save_route()
         self.guarded(run)
 
+    def check_cave(self):
+        self.need_connection()
+        if not self.waypoints:raise ValueError('Grave pelo menos um waypoint.')
+
+    def arm_cave(self):
+        self.runner.route=[tuple(p) for p in self.waypoints];self.runner.index=0
+        self.runner.loop=self.repeat.get();self.runner.cave=True
+        self.runner.pending_step=None;self.runner.failures=0
+        self.status.set('Cavebot armado. Volte a janela do jogo; F8 para parar.')
+
     def start_cave(self):
         def run():
-            self.need_connection()
-            if not self.waypoints:raise ValueError('Grave pelo menos um waypoint.')
-            self.runner.route=[tuple(p) for p in self.waypoints];self.runner.index=0
-            self.runner.loop=self.repeat.get();self.runner.cave=True
-            self.runner.pending_step=None;self.runner.failures=0
-            self.status.set('Cavebot armado. Volte a janela do jogo; F8 para parar.')
+            self.check_cave()
+            self.arm_cave()
         self.guarded(run)
 
+    def check_attack(self):
+        self.need_connection()
+        mode=self.attack_mode.get()
+        key=self.attack_key.get()
+        if mode=='Hotkey':
+            if key not in KEYS or key in ('LEFT','RIGHT','UP','DOWN'):
+                raise ValueError('Selecione uma hotkey de ataque valida. F8 fica reservado para parar.')
+            if not self.hotkey_confirmed.get():
+                raise ValueError('Confira a tecla de selecionar/atacar monstros no jogo e marque a opcao.')
+        elif mode=='Mouse':
+            if not self.calibration:raise ValueError('Calibre os dois pontos do mapa primeiro.')
+        else:raise ValueError('Modo de ataque invalido.')
+        return mode,key
+
+    def arm_attack(self,mode,key):
+        self.runner.attack_action=self.click_monster if mode=='Mouse' else None
+        if mode=='Hotkey':
+            self.runner.attack_key=key
+            self.scan_cancel.set()
+        self.runner.attack=True
+        self.runner.attack_failures=0;self.runner.pending_attack=None;self.runner.next_attack=0;self.runner.expected_target=None
+        if mode=='Mouse':self.request_scan()
+        self.record('attack_armed',dict(mode=mode,key=key if mode=='Hotkey' else None))
+        self.status.set(f'Ataque por {mode.lower()} armado. Volte ao jogo; F8 para parar.')
+
     def start_attack(self):
+        self.guarded(lambda:self.arm_attack(*self.check_attack()))
+
+    def start_all(self):
         def run():
-            self.need_connection()
-            mode=self.attack_mode.get()
-            if mode=='Hotkey':
-                key=self.attack_key.get()
-                if key not in KEYS or key in ('LEFT','RIGHT','UP','DOWN'):
-                    raise ValueError('Selecione uma hotkey de ataque valida. F8 fica reservado para parar.')
-                if not self.hotkey_confirmed.get():
-                    raise ValueError('Confira a tecla de selecionar/atacar monstros no jogo e marque a opcao.')
-                self.runner.attack_action=None
-                self.runner.attack_key=key
-                self.scan_cancel.set()
-            elif mode=='Mouse':
-                if not self.calibration:raise ValueError('Calibre os dois pontos do mapa primeiro.')
-                self.runner.attack_action=self.click_monster
-            else:raise ValueError('Modo de ataque invalido.')
-            self.runner.attack=True
-            self.runner.attack_failures=0;self.runner.pending_attack=None;self.runner.next_attack=0;self.runner.expected_target=None
-            if mode=='Mouse':self.request_scan()
-            self.record('attack_armed',dict(mode=mode,key=self.runner.attack_key if mode=='Hotkey' else None))
-            self.status.set(f'Ataque por {mode.lower()} armado. Volte ao jogo; F8 para parar.')
+            self.check_cave()
+            attack_config=self.check_attack()
+            self.check_loot()
+            if not LIGHT_WRITE_ALLOWED or self.light is None:
+                raise ValueError('Luz indisponivel para esta build.')
+            self.light.tick(True,31)
+            self.light_enabled.set(True)
+            self.arm_cave()
+            self.arm_attack(*attack_config)
+            self.arm_loot()
+            self.status.set('Cavebot, Targeting, Loot e Luz armados. Volte ao jogo.')
         self.guarded(run)
 
     def change_attack_mode(self,event=None):
@@ -291,11 +324,13 @@ class Panel:
 
     def calibrate(self,phase):
         def begin():
-            self.need_connection();self.stop('Calibrando mapa')
-            generation=self.generation
+            self.need_connection()
+            self.manual_epoch+=1;self.input_preparing=True
+            generation=self.generation;epoch=self.manual_epoch
             self.calibration_status.set('Volte ao jogo e deixe o mouse no centro do SQM '+('do personagem.' if phase=='center' else 'imediatamente a DIREITA do personagem.'))
             def capture():
-                if generation!=self.generation:return
+                if generation!=self.generation or epoch!=self.manual_epoch:return
+                self.input_preparing=False
                 def finish():
                     point=self.keyboard.capture_point()
                     if phase=='center':
@@ -366,7 +401,8 @@ class Panel:
 
     def capture_light(self):
         def run():
-            self.need_connection();self.stop('Capturando luz')
+            self.need_connection()
+            if self.light_enabled.get():raise ValueError('Desative a luz do Cromin antes da coleta.')
             if len(self.light_states)>=4:raise ValueError('Coleta concluida; reinicie para outra sequencia.')
             state=read_state(self.memory,self.base)
             obj=int(state['player'],0)
@@ -409,7 +445,8 @@ class Panel:
                 target=state['target']
                 description=(target.get('name') or target['className']) if target else 'nenhum'
                 self.summary.set(f"{state['name']} | HP {state['health']:g}/{state['maxHealth']:g} | Mana {state['mana']:g}\nPosicao {state['position']} | Alvo: {description}")
-                loot_busy=self.loot.tick(state,self.keyboard.focused(),time.monotonic()) if self.loot else False
+                if self.input_preparing:return
+                loot_busy=self.loot.tick(state,self.keyboard.focused(),time.monotonic()) if self.loot and self.calibration else False
                 if loot_busy:
                     self.status.set(self.loot.status)
                 if not loot_busy and (self.runner.cave or self.runner.attack or self.runner.pending_step or self.runner.pending_attack is not None):
@@ -417,7 +454,8 @@ class Panel:
                     self.status.set(self.runner.status)
         except (RuntimeError,ValueError,OSError,KeyError) as error:
             self.stop(str(error))
-        self.window.after(250,self.tick)
+        finally:
+            self.window.after(250,self.tick)
 
     def close(self):
         self.disconnect();self.window.destroy()

@@ -65,6 +65,19 @@ class Tests(unittest.TestCase):
         r.tick(sample(),True,1.6)
         self.assertEqual(keys,['SPACE','RIGHT'])
 
+    def test_attack_remains_armed_after_empty_attempts(self):
+        r,keys=self.runner();r.attack=True
+        for now in (0,2,5,7,10,12,20):
+            r.tick(sample(),True,now)
+        self.assertTrue(r.attack)
+        self.assertEqual(keys,['SPACE']*4)
+
+    def test_invalid_route_only_stops_cavebot(self):
+        r,keys=self.runner();r.attack=r.cave=True;r.next_attack=5;r.route=[(100,100,8)]
+        r.tick(sample(),True,0)
+        self.assertFalse(r.cave);self.assertTrue(r.attack)
+        self.assertEqual(keys,[])
+
     def test_stop_clears_pending_operations(self):
         r,keys=self.runner();r.attack=True;r.cave=True;r.pending_attack=0
         r.pending_step=((100,100,7),0)
